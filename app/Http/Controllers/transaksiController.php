@@ -18,6 +18,7 @@ class transaksiController extends Controller
         $data = transaksiModel::with([
             'detailPegawai',
             'detailMeja',
+            'detailTransaksi.detailMenu',
         ])->get();
         return response()->json($data);
     }
@@ -29,6 +30,7 @@ class transaksiController extends Controller
         $data = transaksiModel::with([
             'detailPegawai',
             'detailMeja',
+            'detailTransaksi.detailMenu',
         ])->find($id);
         return response()->json($data);
 
@@ -165,8 +167,7 @@ class transaksiController extends Controller
         //Gets current user
         $Auth = Auth::user();
 
-        if($Auth->role == "KASIR")
-        {
+        if ($Auth->role == "KASIR") {
 
             //Deletes transaction data based on primary key taken from $id
             $delete = transaksiModel::find($id)->delete();
@@ -180,5 +181,5 @@ class transaksiController extends Controller
         }
 
     }
-    
+
 }

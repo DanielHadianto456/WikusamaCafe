@@ -23,12 +23,19 @@ class transaksiModel extends Model
         'status'
     ];
 
-    public function detailPegawai(){
+    public function detailPegawai()
+    {
         return $this->belongsTo(userModel::class, 'id_user', 'id_user');
     }
 
-    public function detailMeja(){
+    public function detailMeja()
+    {
         return $this->belongsTo(tableModel::class, 'id_meja', 'id_meja');
+    }
+
+    public function detailTransaksi()
+    {
+        return $this->hasMany(detailTransaksiModel::class, 'id_transaksi', 'id_transaksi');
     }
 
 }

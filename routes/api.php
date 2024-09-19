@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\transaksiController;
+use App\Http\Controllers\detailTransaksiController;
 
 //API Route Collection for Authentication Taken from AuthController Controller
 Route::middleware('auth:user_model')->group(function () {
@@ -46,6 +47,16 @@ Route::middleware('auth:user_model')->group(function () {
         Route::patch('/kasir/transaksi/update/{id}', 'updateTransaksi');
         Route::delete('/kasir/transaksi/delete/{id}', 'deleteTransaksi');
 
+    });
+
+    Route::controller(detailTransaksiController::class)->group(function (){
+
+        Route::get('/kasir/transaksi/detail/getAll', 'getAllDetail');
+        Route::get('/kasir/transaksi/detail/DetailId/{id}', 'getDetailId');
+        Route::get('/kasir/transaksi/detail/DetailTransaksiId/{id}', 'getDetailTransaksiId');
+        Route::post('/kasir/transaksi/detail/add/{id}', 'addDetailTransaksi');
+        Route::patch('/kasir/transaksi/detail/update/{id}', 'updateDetailTransaksi');
+        
     });
     
 });
