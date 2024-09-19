@@ -4,36 +4,33 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\foodModel;
-// use Illuminate\Container\Attributes\Auth;
+use App\Models\tableModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class FoodController extends Controller
+class TableController extends Controller
 {
-    //Function to get data from menu table
 
-    public function getFood()
+    //Function used to get all data from table 
+    public function getMeja()
     {
 
-        //Gets all data from menu table
-        $food = foodModel::all();
-        return response()->json($food);
+        $data = tableModel::all();
+        return response()->json($data);
 
     }
 
-    //Function to get data from menu table based on primary key
-    public function getFoodId($id)
+    //Function used to get data based on primary key
+    public function getMejaId($id)
     {
 
-        //Gets data from menu table based on primary key
-        $food = foodModel::find($id);
-        return response()->json($food);
+        $data = tableModel::find($id);
+        return response()->json($data);
 
     }
 
-    //Function used to create food data
-    public function addFood(Request $request)
+    //Function used to create table data
+    public function addMeja(Request $request)
     {
 
         //Gets current user
@@ -44,34 +41,31 @@ class FoodController extends Controller
 
             //Validates input data
             $validator = Validator::make($request->all(), [
-                'nama_menu' => 'required|String|max:100',
-                'jenis' => 'required',
-                'deskripsi' => 'required|String',
-                'gambar' => 'required|String',
-                'harga' => 'required|Integer',
+                'nomor_meja' => 'required|Integer',
             ]);
 
-            //Checks if validator fails
+            //checks if validator fails
             if ($validator->fails()) {
+
                 //Returns an error if so
                 return response()->json($validator->errors()->toJson());
+
             }
 
-            //Creates a variable to save inputted data
-            $save = foodModel::create([
-                'nama_menu' => $request->get('nama_menu'),
-                'jenis' => $request->get('jenis'),
-                'deskripsi' => $request->get('deskripsi'),
-                'gambar' => $request->get('gambar'),
-                'harga' => $request->get('harga'),
+            //Creates a variable used to save inputted data
+            $save = tableModel::create([
+                'nomor_meja' => $request->get('nomor_meja'),
             ]);
 
             //Checks if save is successful
             if ($save) {
+
                 // If the $save is successful, return a 200 response
                 // with a success message
                 return response()->json(['status' => true, 'message' => 'Sukses menambah'], status: 200);
+
             } else {
+
                 // If the $save is not successful, return a 500 response
                 // with an error message
                 return response()->json(['status' => false, 'message' => 'Gagal menambah'], status: 500);
@@ -87,8 +81,8 @@ class FoodController extends Controller
 
     }
 
-    //Function used to update food data
-    public function updateFood(Request $request, $id)
+    //Function used to update table data
+    public function updateMeja(Request $request, $id)
     {
 
         //Gets current user
@@ -99,10 +93,7 @@ class FoodController extends Controller
 
             //Validates input data for registration
             $validator = Validator::make($request->all(), [
-                'nama_menu' => 'required|String|max:100',
-                'jenis' => 'required',
-                'deskripsi' => 'required|String',
-                'harga' => 'required|Integer',
+                'nomor_meja' => 'required|Integer',
             ]);
 
             //Checks if validator fails
@@ -112,22 +103,19 @@ class FoodController extends Controller
             }
 
             //Creates a variable to save inputted data
-            $save = foodModel::where('id_menu', $id)->update([
-                'nama_menu' => $request->get('nama_menu'),
-                'jenis' => $request->get('jenis'),
-                'deskripsi' => $request->get('deskripsi'),
-                'harga' => $request->get('harga'),
+            $save = tableModel::where('id_meja', $id)->update([
+                'nomor_meja' => $request->get('nomor_meja'),
             ]);
 
             //Checks if save is successful
             if ($save) {
                 // If the $save is successful, return a 200 response
                 // with a success message
-                return response()->json(['status' => true, 'message' => 'Sukses menambah'], status: 200);
+                return response()->json(['status' => true, 'message' => 'Sukses mengubah'], status: 200);
             } else {
                 // If the $save is not successful, return a 500 response
                 // with an error message
-                return response()->json(['status' => false, 'message' => 'Gagal menambah'], status: 500);
+                return response()->json(['status' => false, 'message' => 'Gagal mengubah'], status: 500);
             }
 
         } else {
@@ -139,9 +127,9 @@ class FoodController extends Controller
 
     }
 
-    //Function used to delete food data
+    //Function used to delete table data
 
-    public function deleteFood($id)
+    public function deleteMeja($id)
     {
 
         //Gets current user
@@ -149,8 +137,8 @@ class FoodController extends Controller
 
         if ($Auth->role == "ADMIN") {
 
-            //Deletes food data based on primary key
-            $delete = foodModel::where('id_menu', $id)->delete();
+            //Deletes table data based on primary key
+            $delete = tableModel::where('id_meja', $id)->delete();
             return response()->json($delete);
 
         } else {
@@ -159,4 +147,5 @@ class FoodController extends Controller
         }
 
     }
+
 }
