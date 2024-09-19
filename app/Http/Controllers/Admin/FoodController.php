@@ -42,7 +42,7 @@ class FoodController extends Controller
         //Check if current user's role is admin
         if ($Auth->role == "ADMIN") {
 
-            //Validates input data
+            //Validates input data for registration
             $validator = Validator::make($request->all(), [
                 'nama_menu' => 'required|String|max:100',
                 'jenis' => 'required',
