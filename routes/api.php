@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\transaksiController;
 
 //API Route Collection for Authentication Taken from AuthController Controller
 Route::middleware('auth:user_model')->group(function () {
@@ -33,6 +34,17 @@ Route::middleware('auth:user_model')->group(function () {
         Route::post('/admin/meja/add', 'addMeja');
         Route::patch('/admin/meja/update/{id}', 'updateMeja');
         Route::delete('/admin/meja/delete/{id}', 'deleteMeja');
+
+    });
+
+    //Kasir API
+    Route::controller(transaksiController::class)->group(function () {
+       
+        Route::get('/kasir/transaksi/get', 'getTransaksi');
+        Route::get('/kasir/transaksi/getId/{id}', 'getTransaksiId');
+        Route::post('/kasir/transaksi/add', 'addTransaksi');
+        Route::patch('/kasir/transaksi/update/{id}', 'updateTransaksi');
+        Route::delete('/kasir/transaksi/delete/{id}', 'deleteTransaksi');
 
     });
     

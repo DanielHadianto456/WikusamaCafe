@@ -17,5 +17,6 @@ class tableModel extends Model
 
     protected $fillable = [
         'nomor_meja',
+        'status',
     ];
 }
