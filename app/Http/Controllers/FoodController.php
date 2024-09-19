@@ -123,17 +123,17 @@ class FoodController extends Controller
             if ($save) {
                 // If the $save is successful, return a 200 response
                 // with a success message
-                return response()->json(['status' => true, 'message' => 'Sukses menambah'], status: 200);
+                return response()->json(['status' => true, 'message' => 'Sukses memperbarui'], status: 200);
             } else {
                 // If the $save is not successful, return a 500 response
                 // with an error message
-                return response()->json(['status' => false, 'message' => 'Gagal menambah'], status: 500);
+                return response()->json(['status' => false, 'message' => 'Gagal memperbarui'], status: 500);
             }
 
         } else {
 
             //else returns an error
-            return response()->json(['status' => false, 'message' => 'Hanya Admin yang bisa menambah'], status: 500);
+            return response()->json(['status' => false, 'message' => 'Hanya Admin yang bisa memperbarui'], status: 500);
 
         }
 
@@ -155,8 +155,9 @@ class FoodController extends Controller
 
         } else {
             //else returns an error
-            return response()->json(['status' => false, 'message' => 'Hanya Admin yang bisa menambah'], status: 500);
+            return response()->json(['status' => false, 'message' => 'Hanya Admin yang bisa menghapus'], status: 500);
         }
 
     }
+    
 }
