@@ -3,8 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\Admin\FoodController;
-use App\Http\Controllers\Admin\TableController;
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\TableController;
 
 //API Route Collection for Authentication Taken from AuthController Controller
 Route::middleware('auth:user_model')->group(function () {
