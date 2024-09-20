@@ -17,7 +17,7 @@ class detailTransaksiController extends Controller
     public function getAllDetail()
     {
 
-        $data = detailTransaksiModel::with('detailMenu')all();
+        $data = detailTransaksiModel::with('detailMenu')->all();
         response()->json($data);
 
     }
