@@ -14,11 +14,11 @@ class detailTransaksiController extends Controller
 {
 
     //Function used to get all data from table
-    public function getAllDetail()
+    public function getAll()
     {
 
         $data = detailTransaksiModel::all();
-        response()->json($data);
+        return response()->json($data);
 
     }
 
@@ -26,7 +26,7 @@ class detailTransaksiController extends Controller
     public function getDetailId($id)
     {
 
-        $data = detailTransaksiModel::find($id);
+        $data = detailTransaksiModel::with('detailMenu')->find($id);
         return response()->json($data);
 
     }
@@ -35,7 +35,7 @@ class detailTransaksiController extends Controller
     public function getDetailTransaksiId($id)
     {
 
-        $data = detailTransaksiModel::where('id_transaksi', $id)->get();
+        $data = detailTransaksiModel::with('detailMenu')->where('id_transaksi', $id)->get();
         return response()->json($data);
 
     }

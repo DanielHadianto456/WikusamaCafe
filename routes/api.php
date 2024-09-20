@@ -7,6 +7,7 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\transaksiController;
 use App\Http\Controllers\detailTransaksiController;
+use App\Http\Controllers\userController;
 
 //API Route Collection for Authentication Taken from AuthController Controller
 Route::middleware('auth:user_model')->group(function () {
@@ -38,6 +39,15 @@ Route::middleware('auth:user_model')->group(function () {
 
     });
 
+    Route::controller(userController::class)->group(function () {
+        
+        Route::get('/admin/user/get', 'getUserData'); 
+        Route::get('/admin/user/getId/{id}', 'getUserDataId'); 
+        Route::patch('/admin/user/update/{id}', 'updateUserData');
+        Route::delete('/admin/user/delete/{id}', 'deleteUser');
+        
+    });
+
     //Kasir API
     Route::controller(transaksiController::class)->group(function () {
        
@@ -51,12 +61,22 @@ Route::middleware('auth:user_model')->group(function () {
 
     Route::controller(detailTransaksiController::class)->group(function (){
 
-        Route::get('/kasir/transaksi/detail/getAll', 'getAllDetail');
+        Route::get('/kasir/transaksi/detail/getAll', 'getAll');
         Route::get('/kasir/transaksi/detail/DetailId/{id}', 'getDetailId');
         Route::get('/kasir/transaksi/detail/DetailTransaksiId/{id}', 'getDetailTransaksiId');
         Route::post('/kasir/transaksi/detail/add/{id}', 'addDetailTransaksi');
         Route::patch('/kasir/transaksi/detail/update/{id}', 'updateDetailTransaksi');
         
+    });
+
+    //Manajer API
+
+    Route::controller(transaksiController::class)->group(function () {
+       
+        Route::get('/manajer/transaksi/get', 'getTransaksi');
+        Route::get('/manajer/transaksi/getId/{id}', 'getTransaksiId');  
+        Route::post('/manajer/transaksi/getDate', 'getDate');  
+
     });
     
 });
