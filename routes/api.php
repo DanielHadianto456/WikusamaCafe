@@ -61,7 +61,7 @@ Route::middleware('auth:user_model')->group(function () {
 
     Route::controller(detailTransaksiController::class)->group(function (){
 
-        Route::get('/kasir/transaksi/detail/getAll', 'getAllDetail');
+        Route::get('/kasir/transaksi/detail/getAll', 'getAll');
         Route::get('/kasir/transaksi/detail/DetailId/{id}', 'getDetailId');
         Route::get('/kasir/transaksi/detail/DetailTransaksiId/{id}', 'getDetailTransaksiId');
         Route::post('/kasir/transaksi/detail/add/{id}', 'addDetailTransaksi');
