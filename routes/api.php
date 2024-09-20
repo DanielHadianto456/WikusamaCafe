@@ -68,6 +68,16 @@ Route::middleware('auth:user_model')->group(function () {
         Route::patch('/kasir/transaksi/detail/update/{id}', 'updateDetailTransaksi');
         
     });
+
+    //Manajer API
+
+    Route::controller(transaksiController::class)->group(function () {
+       
+        Route::get('/manajer/transaksi/get', 'getTransaksi');
+        Route::get('/manajer/transaksi/getId/{id}', 'getTransaksiId');  
+        Route::post('/manajer/transaksi/getDate', 'getDate');  
+
+    });
     
 });
 

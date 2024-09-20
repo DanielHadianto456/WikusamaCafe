@@ -36,6 +36,32 @@ class transaksiController extends Controller
 
     }
 
+    //Function used to get data based on date
+    public function getDate(Request $request){
+
+        //Gets current user
+        $Auth = Auth::user();
+
+        //Checks if user is manager or not
+        if($Auth->role == 'MANAJER'){
+
+            //Gets data based on date
+            $data = transaksiModel::with([
+                'detailPegawai',
+                'detailMeja',
+                'detailTransaksi.detailMenu',
+            ])->whereDate('tanggal_transaksi', $request->get('tanggal_transaksi'))->get();
+            return response()->json($data);
+
+        } else {
+
+            //else returns an error
+            return response()->json(['status' => false, 'message' => 'Hanya Manajer yang bisa mengakses'], status: 500);
+
+        }
+
+    }
+
     //Function used to make a transaction
     public function addTransaksi(Request $request)
     {
