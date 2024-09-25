@@ -8,7 +8,19 @@
             <router-link to="/about">About</router-link>         
         </div>
     </nav> -->
+    keren
+
+     <p v-if="logins">{{logins}}</p> 
     <main>
         <router-view/>
     </main>
 </template>
+
+<script setup>
+
+import { RouterLink, RouterView } from "vue-router";
+import { useLogin } from "@/stores/auth";
+
+const logins = useLogin()
+
+</script>

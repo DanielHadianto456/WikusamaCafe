@@ -1,11 +1,12 @@
 <template>
   <div class="wrapper">
     <div class="form-wrapper">
-      <form @submit.prevent="console.log(formData)" method="POST">
+      <form @submit.prevent="authenticate('auth/register', formData)" method="POST">
+      <!-- <form @submit.prevent="console.log(formData)" method="POST"> -->
         <table class="form-table" border="0" cellpadding="10">
           <tr class="form-column">
             <td class="form-row">
-              <h1>Register</h1>
+              <h1>Register  </h1>
             </td>
           </tr>
           <tr class="form-column">
@@ -14,9 +15,9 @@
                 class="name-input"
                 type="text"
                 placeholder="Name"
-                name="name"
+                name="nama_user"
                 required
-                v-model="formData.name"
+                v-model="formData.nama_user"
               />
             </td>
           </tr>
@@ -74,14 +75,16 @@
 
 <script setup>
 import { reactive } from "vue";
-
+import { useRegister } from "@/stores/auth";
 
 const formData = reactive({
-  name: "",
+  nama_user: "",
   username: "",
   password: "",
   role: "",
 });
+
+const { authenticate } = useRegister()
 
 </script>
 
