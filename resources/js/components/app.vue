@@ -1,13 +1,13 @@
 <template>
-    <h1>
+    <!-- <h1>
         Hello App!
-    </h1>
-    <nav>
+    </h1> -->
+    <!-- <nav>
         <div>
             <router-link to="/">Home</router-link>
             <router-link to="/about">About</router-link>         
         </div>
-    </nav>
+    </nav> -->
     <main>
         <router-view/>
     </main>
