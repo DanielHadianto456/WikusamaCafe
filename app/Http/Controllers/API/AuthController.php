@@ -71,8 +71,14 @@ class AuthController extends Controller
             return response()->json(['error' => 'Could not create token'], 500);
         }
 
-        // If the authentication is successful, return a response with the token
-        return response()->json(compact('token'));
+        // If the authentication is successful, return a response with the token, username, and role\
+        $user = Auth::guard('user_model')->user();
+
+        return response()->json([
+            'user' => $request->username,
+            'role' => $user->role,
+            'token' => $token,
+        ]);
 
     }
 
