@@ -1,10 +1,12 @@
 <template>
   <Header />
-  <div class="wrapper"></div>
+  <div class="wrapper">
+
+  </div>
 </template>
 
 <script>
-import Header from "./Header.vue";
+import Header from "../Header.vue";
 
 export default {
   components: {

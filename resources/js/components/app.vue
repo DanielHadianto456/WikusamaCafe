@@ -8,19 +8,49 @@
             <router-link to="/about">About</router-link>         
         </div>
     </nav> -->
-    keren
+    <!-- keren-->
+     <!-- <p v-if="logins">{{logins.role}}</p>   -->
 
-     <p v-if="logins">{{logins.user}}</p> 
     <main>
         <router-view/>
     </main>
 </template>
 
-<script setup>
+<script>
 
-import { RouterLink, RouterView } from "vue-router";
-import { useLogin } from "@/stores/auth";
+// import { RouterLink, RouterView } from "vue-router";
+// import { useLogin } from "@/stores/auth";
 
-const logins = useLogin()
+// const logins = useLogin()
+
+export default{
+
+    name: "App",
+
+    // created(){
+
+    //     let role = localStorage.getItem('role')
+
+    //     if(role == "ADMIN"){
+
+    //         this.$router.push({name: 'admin'})
+
+    //     } else if(role == "MANAJER"){
+
+    //         this.$router.push({name: 'manajer'})
+
+    //     } else if(role == "KASIR"){
+
+    //         this.$router.push({name: 'kasir'})
+
+    //     } else {
+
+    //         this.$router.push({name: 'login'})
+
+    //     }
+
+    // }
+
+}
 
 </script>
