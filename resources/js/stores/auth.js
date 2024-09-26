@@ -22,6 +22,7 @@ export const useRegister = defineStore("registerStore", {
 
             const data = await res.json();
             console.log(data);
+            this.router.push({ name: "login" });
         },
     },
 });
@@ -29,6 +30,7 @@ export const useRegister = defineStore("registerStore", {
 export const useLogin = defineStore("loginStore", {
     state: () => {
         return {
+            user: null,
             token: null,
             // token: data.token
         };
@@ -53,10 +55,15 @@ export const useLogin = defineStore("loginStore", {
             if(data){
 
                 localStorage.setItem('token', data.token)
-                this.token = data.token
+                localStorage.setItem('user', data.user)
 
+                this.token = data.token
+                this.user = data.user
 
             }
+
+            this.router.push({ name: "home" });
+
         },
     },
 });

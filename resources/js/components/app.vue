@@ -10,7 +10,7 @@
     </nav> -->
     keren
 
-     <p v-if="logins">{{logins}}</p> 
+     <p v-if="logins">{{logins.user}}</p> 
     <main>
         <router-view/>
     </main>
