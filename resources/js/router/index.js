@@ -4,6 +4,7 @@ import home from '../components/HomePage.vue';
 import admin from '../components/Admin/AdminPanel.vue'
 import kasir from '../components/Kasir/KasirPanel.vue'
 import kasirTes from '../components/Kasir/KasirTes.vue'
+import kasirHistory from '../components/Kasir/kasirHistory.vue'
 import manajer from '../components/Manajer/ManajerPanel.vue'
 import about from '../components/AboutPage.vue';
 import notFound from '../components/NotFoundPage.vue';
@@ -44,6 +45,13 @@ const routes = [
         path: '/kasirTes',
         name: 'kasirTes', 
         component: kasirTes,
+        meta: { requiresRole: 'KASIR' }
+    },
+
+    {
+        path: '/kasir/kasirHistory',
+        name: 'kasirHistory', 
+        component: kasirHistory,
         meta: { requiresRole: 'KASIR' }
     },
 
