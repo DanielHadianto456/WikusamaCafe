@@ -20,3 +20,46 @@ export const getAllOrders = defineStore("getAllOrdersStore", {
         }
     }
 })
+
+export const addOrder = defineStore("addOrderStore", {
+    actions: {
+        async authenticate(apiRoute, formData){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await res.json();
+            console.log(data);
+            this.router.push({ name: "kasirHistory" });
+        }
+    }
+})
+
+export const getAllTables = defineStore("getTableStore", {
+    actions: {
+        async authenticate(apiRoute) {
+            const token = localStorage.getItem("token"); // Get the token from local storage
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "get",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            return data;
+        }
+    }
+})

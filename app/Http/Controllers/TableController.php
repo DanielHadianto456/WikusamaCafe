@@ -20,6 +20,14 @@ class TableController extends Controller
 
     }
 
+    public function getMejaKosong()
+    {
+
+        $data = tableModel::where('status', 'KOSONG')->get();
+        return response()->json($data);
+
+    }
+
     //Function used to get data based on primary key
     public function getMejaId($id)
     {

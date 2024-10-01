@@ -10,7 +10,7 @@
           History
         </strong>
       </router-link>
-      <router-link to="/kasir/penjualan" class="button">
+      <router-link to="/kasir/kasirTambah" class="button">
         <strong>
           Tambah Pesanan
         </strong>
