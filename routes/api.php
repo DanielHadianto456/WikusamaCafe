@@ -69,6 +69,15 @@ Route::middleware('auth:user_model')->group(function () {
         
     });
 
+    Route::controller(TableController::class)->group(function (){
+
+        Route::get('/kasir/meja/get', 'getMeja');
+        Route::get('/kasir/meja/getKosong', 'getMejaKosong');
+        Route::get('/kasir/meja/getId/{id}', 'getMejaId');
+        Route::patch('/kasir/meja/update/{id}', 'updateMeja');
+        
+    });
+
     //Manajer API
 
     Route::controller(transaksiController::class)->group(function () {

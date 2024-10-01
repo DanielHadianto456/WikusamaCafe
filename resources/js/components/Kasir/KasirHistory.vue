@@ -8,7 +8,7 @@
           <h2>All Orders History</h2>
         </div>
         <div class="button-container">
-          <router-link class="button">Add order</router-link>
+          <router-link to="/kasir/kasirTambah" class="button">Add order</router-link>
         </div>
       </div>
       <div class="table-container">
