@@ -78,6 +78,13 @@ Route::middleware('auth:user_model')->group(function () {
         
     });
 
+    Route::controller(FoodController::class)->group(function (){
+
+        Route::get('/kasir/food/get', 'getFood');
+        Route::get('/kasir/food/getId/{id}', 'getFoodId');
+        
+    });
+
     //Manajer API
 
     Route::controller(transaksiController::class)->group(function () {

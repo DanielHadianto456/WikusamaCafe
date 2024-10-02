@@ -9,7 +9,7 @@
         </div>
         <div class="button-container">
           <router-link v-if="orderStatus.status === 'LUNAS'" class="button-done" disabled> Add Item </router-link>
-          <router-link v-else class="button"> Add Item </router-link>
+          <router-link v-else class="button" :to="{ name: 'kasirTambahDetail', params: { id: this.$route.params.id } }"> Add Item </router-link>
         </div>
       </div>
       <div class="table-container">

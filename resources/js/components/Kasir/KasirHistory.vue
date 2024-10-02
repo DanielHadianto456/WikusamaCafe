@@ -14,6 +14,7 @@
         </div>
       </div>
       <div class="table-container">
+        {{orders}}
         <table class="table-list">
           <thead>
             <tr>
@@ -25,7 +26,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="order in orders" :key="order.id">
+            <tr v-for="order in orders" :key="order.id_transaksi">
               <td>{{ order.tanggal_transaksi }}</td>
               <td>{{ order.nama_pelanggan }}</td>
               <td>{{ order.detail_meja.nomor_meja }}</td>
