@@ -85,7 +85,8 @@ const formData = reactive({
 }
 
 .form-table td {
-  padding: 2vh; /* Adjusted padding to maintain row distance */
+  padding: 2vh;
+  border-bottom: 0px; /* Adjusted padding to maintain row distance */
 }
 
 .wrapper .form-table input {

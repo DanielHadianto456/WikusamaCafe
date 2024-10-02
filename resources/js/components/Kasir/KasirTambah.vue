@@ -9,7 +9,7 @@
     <div class="card">
       <div class="table-container">
         <form @submit.prevent="submitOrder">
-          <table>
+          <table class="table-list">
             <thead></thead>
             <tbody>
               <tr>
@@ -98,16 +98,6 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  background-color: #fff8e8;
-  padding-bottom: 10vh;
-  overflow: auto;
-}
-
 .card {
   width: 80%;
   display: flex;
@@ -125,12 +115,12 @@ export default {
   width: 100%;
   align-items: center;
 }
-
+/* 
 table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-}
+} */
 
 input {
     width: 25%;
@@ -142,7 +132,7 @@ input {
 }
 
 td {
-  padding-bottom: 20px;
+  border-bottom: 0px;
 }
 
 select {

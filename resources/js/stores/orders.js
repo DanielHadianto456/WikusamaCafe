@@ -84,3 +84,45 @@ export const payOrder = defineStore("payOrderStore",{
         }
     }
 })
+
+export const getOrderDetail = defineStore("getOrderDetailStore", {
+    actions: {
+        async authenticate (apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            return data;
+        }
+    }
+})
+
+export const getOrderId = defineStore("getOrderIdStore", {
+    actions: {
+        async authenticate(apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            return data;
+        }
+    }
+})

@@ -108,6 +108,7 @@ const { authenticate } = useRegister()
 }
 
 .form-table td {
+  border-bottom: 0px;
   padding: 2vh; /* Adjusted padding to maintain row distance */
 }
 

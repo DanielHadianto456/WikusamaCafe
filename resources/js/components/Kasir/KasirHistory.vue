@@ -1,7 +1,7 @@
 <template>
   <Header />
   <div class="wrapper">
-    <div class="card">
+    <div class="table-card">
       <div class="header-container">
         <div class="title-container">
           <h1>History</h1>
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="table-container">
-        <table>
+        <table class="table-list">
           <thead>
             <tr>
               <td>Tanggal</td>
@@ -47,6 +47,9 @@
                 <button class="button button-done" disabled v-else>
                   Sudah lunas
                 </button>
+                <router-link class="button" :to="{ name: 'kasirDetail', params: { id: order.id_transaksi }}">
+                  Detail
+                </router-link>
               </td>
             </tr>
           </tbody>
@@ -104,16 +107,7 @@ export default {
   width: 150px;
 }
 
-.header-container {
-  justify-content: space-between;
-  align-self: flex-start;
-  margin-bottom: 20px;
-  display: flex;
-  width: 100%;
-  align-items: center;
-}
-
-.wrapper {
+/* .wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -121,34 +115,18 @@ export default {
   background-color: #fff8e8;
   padding-bottom: 10vh;
   overflow: auto;
-}
+} */
 
-table {
+/* table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-}
-
-.card {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
+} */
 
 td {
   padding-top: 30px;
   padding-bottom: 10px;
   border-bottom: 1px solid rgb(218, 218, 218);
-}
-
-.button-done {
-  background-color: #f0f0f0;
-  color: #a0a0a0;
-  cursor: default;
 }
 </style>
 
