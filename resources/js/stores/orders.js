@@ -6,7 +6,7 @@ export const getAllOrders = defineStore("getAllOrdersStore", {
             const token = localStorage.getItem("token"); // Get the token from local storage
 
             const res = await fetch(`/api/${apiRoute}`, {
-                method: "get",
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
@@ -27,7 +27,7 @@ export const addOrder = defineStore("addOrderStore", {
             const token = localStorage.getItem("token");
 
             const res = await fetch(`/api/${apiRoute}`, {
-                method: "post",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
@@ -38,7 +38,7 @@ export const addOrder = defineStore("addOrderStore", {
 
             const data = await res.json();
             console.log(data);
-            this.router.push({ name: "kasirHistory" });
+            this.router.push({ name: "kasirDetail", params: {id: data.id_transaksi} });
         }
     }
 })
@@ -49,7 +49,7 @@ export const getAllTables = defineStore("getTableStore", {
             const token = localStorage.getItem("token"); // Get the token from local storage
 
             const res = await fetch(`/api/${apiRoute}`, {
-                method: "get",
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
@@ -60,6 +60,133 @@ export const getAllTables = defineStore("getTableStore", {
             const data = await res.json();
             console.log(data);
             return data;
+        }
+    }
+})
+
+export const payOrder = defineStore("payOrderStore",{
+    actions: {
+        async authenticate(apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            this.router.push({ name: "kasirHistory" });
+        }
+    }
+})
+
+export const getOrderDetail = defineStore("getOrderDetailStore", {
+    actions: {
+        async authenticate (apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            return data;
+        }
+    }
+})
+
+export const getOrderId = defineStore("getOrderIdStore", {
+    actions: {
+        async authenticate(apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            return data;
+        }
+    }
+})
+
+export const getMenu = defineStore("getMenuStore", {
+    actions: {
+        async authenticate(apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data)
+            return data;
+        }
+    }
+})
+
+export const addDetail = defineStore("addDetailStore",{
+    actions: {
+        async authenticate(apiRoute, formData){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await res.json();
+            console.log(data);
+            this.router.push({ name: "kasirDetail", params: {id: data.id_transaksi} });
+        }
+    }
+})
+
+export const deleteDetail = defineStore("deletDetailStore", {
+    actions: {
+        async authenticate(apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            // this.router.push({ name: "kasirDetail", params: {id: data.id_transaksi} });
         }
     }
 })

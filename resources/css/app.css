@@ -3,7 +3,7 @@
     margin: 0;
 }
 
-.wrapper .card {
+.card {
     margin-top: 7.5vh;
     display: flex;
     align-items: center;
@@ -15,6 +15,31 @@
     padding: 10vh 10vh 10vh 10vh;
     height: auto;
     width: 125vh;
+}
+
+
+.table-card {
+    margin-top: 7.5vh;
+    font-family: "poppins";
+    background: white;
+    border-radius: 10px;
+    box-shadow: 5.5px 8px 8px #00000059;
+    padding: 50px 10vh 50px 10vh;
+    height: auto;
+    width: 125vh;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* padding-top: 50px;
+    padding-bottom: 50px; */
+}
+
+.table-list {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .button {
@@ -32,4 +57,81 @@
     text-decoration: none;
     font-family: "poppins";
     margin: 1vh;
+    
 }
+
+.button-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 25%;
+    height: 7.5vh;
+    width: 150px;
+    cursor: pointer;
+    background-color: #D11A2A;
+    border: none;
+    color: white;
+    border-radius: 5vh;
+    font-size: 2vh;
+    text-decoration: none;
+    font-family: "poppins";
+    margin: 1vh;
+    
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    
+    padding-bottom: 10vh;
+    /* overflow: hidden; */
+    overflow: auto;
+    /* max-height: 100vh; */
+}
+
+.header-container {
+    justify-content: space-between;
+    align-self: flex-start;
+    margin-bottom: 20px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.button-done {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 25%;
+    height: 7.5vh;
+    border: none;
+    border-radius: 5vh;
+    font-size: 2vh;
+    text-decoration: none;
+    font-family: "poppins";
+    margin: 1vh;
+    background-color: #f0f0f0;
+    color: #a0a0a0;
+    cursor: default;
+  }
+
+  td {
+    padding-top: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(218, 218, 218);
+  }
+
+  thead{
+    font-weight: bold;
+  }
+
+  body{
+    background-color: #fff8e8;
+  }
+
+  .ignore-form{
+    display: contents;
+  }
+

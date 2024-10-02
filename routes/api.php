@@ -66,6 +66,7 @@ Route::middleware('auth:user_model')->group(function () {
         Route::get('/kasir/transaksi/detail/DetailTransaksiId/{id}', 'getDetailTransaksiId');
         Route::post('/kasir/transaksi/detail/add/{id}', 'addDetailTransaksi');
         Route::patch('/kasir/transaksi/detail/update/{id}', 'updateDetailTransaksi');
+        Route::delete('/kasir/transaksi/detail/delete/{id}', 'deleteDetailTransaksi');
         
     });
 
@@ -75,6 +76,13 @@ Route::middleware('auth:user_model')->group(function () {
         Route::get('/kasir/meja/getKosong', 'getMejaKosong');
         Route::get('/kasir/meja/getId/{id}', 'getMejaId');
         Route::patch('/kasir/meja/update/{id}', 'updateMeja');
+        
+    });
+
+    Route::controller(FoodController::class)->group(function (){
+
+        Route::get('/kasir/food/get', 'getFood');
+        Route::get('/kasir/food/getId/{id}', 'getFoodId');
         
     });
 

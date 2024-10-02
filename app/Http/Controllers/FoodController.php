@@ -47,7 +47,7 @@ class FoodController extends Controller
                 'nama_menu' => 'required|String|max:100',
                 'jenis' => 'required',
                 'deskripsi' => 'required|String',
-                'gambar' => 'required|String',
+                'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'harga' => 'required|Integer',
             ]);
 
@@ -57,12 +57,21 @@ class FoodController extends Controller
                 return response()->json($validator->errors()->toJson());
             }
 
+              // Handle image upload
+              if ($request->hasFile('gambar')) {
+                $image = $request->file('gambar');
+                $imageName = $image->getClientOriginalName();
+                $imagePath = $image->storeAs('images/menu', $imageName, 'public');
+            }
+
+
+
             //Creates a variable to save inputted data
             $save = foodModel::create([
                 'nama_menu' => $request->get('nama_menu'),
                 'jenis' => $request->get('jenis'),
                 'deskripsi' => $request->get('deskripsi'),
-                'gambar' => $request->get('gambar'),
+                'gambar' => $imagePath,
                 'harga' => $request->get('harga'),
             ]);
 

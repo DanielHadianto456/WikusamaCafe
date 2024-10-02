@@ -40,74 +40,136 @@ class detailTransaksiController extends Controller
 
     }
 
-    //Function used to create transaction detail
+    // Function used to create transaction detail
     public function addDetailTransaksi(Request $request, $id) // INPUT id_transaksi FOR $id
     {
-
-        //Gets current user
+        // Gets current user
         $Auth = Auth::user();
 
-        //Gets food data based on primary key from $request
-        $CheckFood = foodModel::find($request->id_menu);
-
-        //Gets transaction data based on primary key from $request
+        // Gets transaction data based on primary key from $request
         $CheckTransaction = transaksiModel::find($id);
 
-        //Checks if user is "KASIR"
+        // Checks if user is "KASIR"
         if ($Auth->role == "KASIR") {
 
-            //Checks if status is set to "BELUM_BAYAR"
+            // Checks if status is set to "BELUM_BAYAR"
             if ($CheckTransaction->status == "BELUM_BAYAR") {
 
-                //Creates a validator to validate inputs
+                // Creates a validator to validate the array of menu inputs
                 $validator = Validator::make($request->all(), [
-                    'id_menu' => 'required|Integer',
+                    'menu_items' => 'required|array',
+                    'menu_items.*.id_menu' => 'required|integer',
                 ]);
 
-                //Checks if validator occurs an error or not
+                // Checks if validator occurs an error or not
                 if ($validator->fails()) {
-
-                    //Returns an error if so
                     return response()->json($validator->errors()->toJson());
-
                 }
 
-                //Creates a variable to save inputted data
-                $save = detailTransaksiModel::create([
-                    'id_transaksi' => $id, //id_transaksi is taken from $id in parameter
-                    'id_menu' => $request->id_menu,
-                    'harga' => $CheckFood->harga,
-                ]);
+                // Initialize an array to store results
+                $results = [];
 
-                //Checks if save is successful
-                if ($save) {
+                // Loop through each menu item in the request
+                foreach ($request->menu_items as $menuItem) {
+                    // Gets food data based on primary key from each menu item
+                    $CheckFood = foodModel::find($menuItem['id_menu']);
 
-                    //If the $save is successful, return a 200 response
-                    // with a success message
-                    return response()->json(['status' => true, 'message' => 'Berhasil Menambah'], status: 200);
+                    if ($CheckFood) {
+                        // Creates a variable to save inputted data for each menu item
+                        $save = detailTransaksiModel::create([
+                            'id_transaksi' => $id, // id_transaksi is taken from $id in parameter
+                            'id_menu' => $menuItem['id_menu'],
+                            'harga' => $CheckFood->harga,
+                        ]);
 
-                } else {
-
-                    //else returns an error
-                    return response()->json(['status' => false, 'message' => 'Gagal menambah'], status: 500);
-
+                        // Add the result of each save operation to the results array
+                        $results[] = $save ? ['status' => true, 'id_menu' => $menuItem['id_menu'], 'message' => 'Berhasil Menambah']
+                            : ['status' => false, 'id_menu' => $menuItem['id_menu'], 'message' => 'Gagal Menambah'];
+                    } else {
+                        // If the menu item is not found, add an error to the results
+                        $results[] = ['status' => false, 'id_menu' => $menuItem['id_menu'], 'message' => 'Menu not found'];
+                    }
                 }
+
+                // Return all the results after processing the array
+                return response()->json($results, status: 200);
 
             } else {
-
-                //else returns an error
                 return response()->json(['status' => false, 'message' => 'Gagal, transaksi sudah lunas'], status: 500);
-
             }
 
         } else {
-
-            //else returns an error
             return response()->json(['status' => false, 'message' => 'Hanya Kasir yang bisa menambah'], status: 500);
-
         }
-
     }
+
+    // public function addDetailTransaksi(Request $request, $id) // INPUT id_transaksi FOR $id
+    // {
+
+    //     //Gets current user
+    //     $Auth = Auth::user();
+
+    //     //Gets food data based on primary key from $request
+    //     $CheckFood = foodModel::find($request->id_menu);
+
+    //     //Gets transaction data based on primary key from $request
+    //     $CheckTransaction = transaksiModel::find($id);
+
+    //     //Checks if user is "KASIR"
+    //     if ($Auth->role == "KASIR") {
+
+    //         //Checks if status is set to "BELUM_BAYAR"
+    //         if ($CheckTransaction->status == "BELUM_BAYAR") {
+
+    //             //Creates a validator to validate inputs
+    //             $validator = Validator::make($request->all(), [
+    //                 'id_menu' => 'required|Integer',
+    //             ]);
+
+    //             //Checks if validator occurs an error or not
+    //             if ($validator->fails()) {
+
+    //                 //Returns an error if so
+    //                 return response()->json($validator->errors()->toJson());
+
+    //             }
+
+    //             //Creates a variable to save inputted data
+    //             $save = detailTransaksiModel::create([
+    //                 'id_transaksi' => $id, //id_transaksi is taken from $id in parameter
+    //                 'id_menu' => $request->id_menu,
+    //                 'harga' => $CheckFood->harga,
+    //             ]);
+
+    //             //Checks if save is successful
+    //             if ($save) {
+
+    //                 //If the $save is successful, return a 200 response
+    //                 // with a success message
+    //                 return response()->json(['status' => true, 'message' => 'Berhasil Menambah'], status: 200);
+
+    //             } else {
+
+    //                 //else returns an error
+    //                 return response()->json(['status' => false, 'message' => 'Gagal menambah'], status: 500);
+
+    //             }
+
+    //         } else {
+
+    //             //else returns an error
+    //             return response()->json(['status' => false, 'message' => 'Gagal, transaksi sudah lunas'], status: 500);
+
+    //         }
+
+    //     } else {
+
+    //         //else returns an error
+    //         return response()->json(['status' => false, 'message' => 'Hanya Kasir yang bisa menambah'], status: 500);
+
+    //     }
+
+    // }
 
     //Function used to update transaction detail
     public function updateDetailTransaksi(Request $request, $id)// INPUT id_detail_transaksi FOR $id
