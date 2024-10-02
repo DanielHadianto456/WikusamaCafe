@@ -16,94 +16,81 @@ import register from '../components/RegisterPage.vue';
 
 
 const routes = [
-
-    // {
-    //     path: '/',
-    //     name: 'home', 
-    //     component: home
-    // },
-
+    {
+        path: '/',
+        name: 'home', 
+        component: home,
+        meta: { requiresRole: ['KASIR', 'ADMIN', 'MANAJER'] }
+    },
     {
         path: '/admin',
         name: 'admin', 
         component: admin,
-        meta : { requiresRole: 'ADMIN' }
+        meta: { requiresRole: ['ADMIN'] }
     },
-
     {
         path: '/manajer',
         name: 'manajer', 
         component: manajer,
-        meta: { requiresRole: 'MANAJER' }
+        meta: { requiresRole: ['MANAJER'] }
     },
-
     {
         path: '/kasir',
         name: 'kasir', 
         component: kasir,
-        meta: { requiresRole: 'KASIR' }
+        meta: { requiresRole: ['KASIR'] }
     },
-
     {
         path: '/kasirTes',
         name: 'kasirTes', 
         component: kasirTes,
-        meta: { requiresRole: 'KASIR' }
+        meta: { requiresRole: ['KASIR'] }
     },
-
     {
         path: '/kasir/kasirHistory',
         name: 'kasirHistory', 
         component: kasirHistory,
-        meta: { requiresRole: 'KASIR' }
+        meta: { requiresRole: ['KASIR'] }
     },
-
     {
         path: '/kasir/kasirTambah',
         name: 'kasirTambah', 
         component: kasirTambah,
-        meta: { requiresRole: 'KASIR' }
+        meta: { requiresRole: ['KASIR'] }
     },
-
     {
         path: '/kasir/kasirTambahDetail/:id',
         name: 'kasirTambahDetail', 
         component: kasirTambahDetail,
-        meta: { requiresRole: 'KASIR' }
+        meta: { requiresRole: ['KASIR'] }
     },
-
     {
         path: '/kasir/kasirDetail/:id',
         name: 'kasirDetail', 
         component: kasirDetail,
-        meta: { requiresRole: 'KASIR' }
+        meta: { requiresRole: ['KASIR'] }
     },
-
     {
         path: '/about',
         name: 'about', 
         component: about
     },
-
     {
-        path: '/',
+        path: '/login',
         name: 'login', 
         component: login
     },
-    
     {
         path: '/register',
         name: 'register', 
         component: register
     },
-
     {
         path: '/:pathMatch(.*)*',
         name: 'notFound',
         component: notFound
     },
-
-]
+];
 
 const router = createRouter({
     history: createWebHistory(),
@@ -119,7 +106,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresRole)) {
         const requiredRole = to.meta.requiresRole;
         if (isLoggedIn) {
-            if (role === requiredRole) {
+            if (requiredRole.includes(role)) {
                 next();
             } else {
                 next({ name: 'notFound' }); // Redirect to not authorized page if the user does not have the required role

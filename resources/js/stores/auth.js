@@ -63,15 +63,16 @@ export const useLogin = defineStore("loginStore", {
                 this.user = data.user;
                 this.role = data.role;
 
-                if (this.role == "KASIR") {
-                    this.router.push({ name: "kasir" });
-                } else if (this.role == "MANAJER") {
-                    this.router.push({ name: "manajer" });
-                } else if (this.role == "ADMIN") {
-                    this.router.push({ name: "admin" });
-                } else {
-                    this.router.push({ name: "home" });
-                }
+                this.router.push({ name: "home" });
+                // if (this.role == "KASIR") {
+                //     this.router.push({ name: "kasir" });
+                // } else if (this.role == "MANAJER") {
+                //     this.router.push({ name: "manajer" });
+                // } else if (this.role == "ADMIN") {
+                //     this.router.push({ name: "admin" });
+                // } else {
+                //     this.router.push({ name: "home" });
+                // }
             }
             // this.router.push({ name: "home" });
         },

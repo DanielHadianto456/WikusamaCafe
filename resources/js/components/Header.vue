@@ -22,11 +22,13 @@
     <div></div>
     <div class="items" v-if="user">
       <span class="item">Welcome, {{ user }}</span>
+      <router-link class="item" to="/">Home</router-link>
       <span @click="logout" class="item">Logout</span>
     </div>
     <div class="items" v-else>
       <router-link to="/login" class="item">Login</router-link>
     </div>
+    
   </div>
 </template>
 
@@ -36,8 +38,6 @@
 // const { authenticate } = useLogout();
 
 // export default {
-
-    
 
 //   name: "Header",
 
@@ -56,26 +56,20 @@
 import { useLogout } from "@/stores/auth";
 
 export default {
-
   name: "Header",
 
   data() {
-
     return {
-
-      user: localStorage.getItem('user'),
-
+      user: localStorage.getItem("user"),
     };
-
   },
 
   methods: {
-
     logout() {
-
       const logoutStore = useLogout();
 
-      logoutStore.authenticate('auth/logout')
+      logoutStore
+        .authenticate("auth/logout")
         .then(() => {
           // Optionally handle any post-logout actions here
           this.user = null; // Clear the user data from the component
@@ -83,11 +77,8 @@ export default {
         .catch((error) => {
           console.error("Logout error:", error);
         });
-
     },
-
   },
-
 };
 </script>
 

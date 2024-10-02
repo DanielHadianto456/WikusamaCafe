@@ -63,8 +63,13 @@
                 </button>
               </td>
             </tr>
-            <tr class="total-row">
-              <td>Total: Rp. {{ totalHarga }}</td>
+            <tr>
+              <td>
+                <h3>
+
+                Total: Rp. {{ totalHarga }}
+                </h3>
+              </td>
               <td></td>
               <td></td>
               <td></td>
@@ -183,11 +188,6 @@ export default {
 }
 .button-done {
   width: 150px;
-}
-
-.total-row {
-  font-weight: bold;
-  font-size: 3vh;
 }
 
 td {
