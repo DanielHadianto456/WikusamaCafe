@@ -31,7 +31,7 @@
                       :key="table.id_meja"
                       :value="table.id_meja"
                     >
-                      {{ table.id_meja }}
+                      {{ table.nomor_meja }}
                     </option>
                   </select>
                 </td>

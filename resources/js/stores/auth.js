@@ -12,7 +12,7 @@ export const useRegister = defineStore("registerStore", {
     actions: {
         async authenticate(apiRoute, formData) {
             const res = await fetch(`/api/${apiRoute}`, {
-                method: "post",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json", // Added header
                     Accept: "application/json",
@@ -43,7 +43,7 @@ export const useLogin = defineStore("loginStore", {
     actions: {
         async authenticate(apiRoute, formData) {
             const res = await fetch(`/api/${apiRoute}`, {
-                method: "post",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json", // Added header
                     Accept: "application/json",
@@ -84,7 +84,7 @@ export const useLogout = defineStore("logoutStore", {
             const token = localStorage.getItem("token"); // Get the token from local storage
 
             const res = await fetch(`/api/${apiRoute}`, {
-                method: "post",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",

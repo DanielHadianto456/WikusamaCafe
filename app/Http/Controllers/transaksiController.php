@@ -119,7 +119,7 @@ class transaksiController extends Controller
 
                     // If the $save is successful, return a 200 response
                     // with a success message
-                    return response()->json(['status' => true, 'message' => 'Sukses menambah'], status: 200);
+                    return response()->json($save);
 
                 } else {
 

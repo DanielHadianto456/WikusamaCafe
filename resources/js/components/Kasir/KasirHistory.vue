@@ -8,7 +8,9 @@
           <h2>All Orders History</h2>
         </div>
         <div class="button-container">
-          <router-link to="/kasir/kasirTambah" class="button">Add order</router-link>
+          <router-link to="/kasir/kasirTambah" class="button"
+            >Add order</router-link
+          >
         </div>
       </div>
       <div class="table-container">
@@ -17,7 +19,7 @@
             <tr>
               <td>Tanggal</td>
               <td>Pelanggan</td>
-              <td>Meja</td>
+              <td>Nomor Meja</td>
               <td>Status Transaksi</td>
               <td>Actions</td>
             </tr>
@@ -27,9 +29,24 @@
               <td>{{ order.tanggal_transaksi }}</td>
               <td>{{ order.nama_pelanggan }}</td>
               <td>{{ order.detail_meja.nomor_meja }}</td>
-              <td>{{ order.status }}</td>
+              <td
+                v-if="order.status === 'BELUM_BAYAR'"
+                style="color: red; font-weight: bold"
+              >
+                BELUM BAYAR
+              </td>
+              <td v-else style="color: green; font-weight: bold">LUNAS</td>
               <td>
-                <!-- Add action buttons or links here -->
+                <button
+                  class="button"
+                  v-if="order.status === 'BELUM_BAYAR'"
+                  @click="payOrders(order.id_transaksi)"
+                >
+                  Bayar
+                </button>
+                <button class="button button-done" disabled v-else>
+                  Sudah lunas
+                </button>
               </td>
             </tr>
           </tbody>
@@ -41,7 +58,7 @@
 
 <script>
 import { reactive, onMounted } from "vue";
-import { getAllOrders } from "@/stores/orders";
+import { getAllOrders, payOrder } from "@/stores/orders";
 
 import Header from "../Header.vue";
 
@@ -62,6 +79,15 @@ export default {
         const data = await store.authenticate("kasir/transaksi/get");
         console.log("Fetched data:", data);
         this.orders = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async payOrders(orderId) {
+      try {
+        const store = await payOrder();
+        await store.authenticate(`kasir/transaksi/update/${orderId}`);
       } catch (error) {
         console.log(error);
       }
@@ -119,5 +145,10 @@ td {
   border-bottom: 1px solid rgb(218, 218, 218);
 }
 
+.button-done {
+  background-color: #f0f0f0;
+  color: #a0a0a0;
+  cursor: default;
+}
 </style>
 
