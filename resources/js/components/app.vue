@@ -27,29 +27,15 @@ export default{
 
     name: "App",
 
-    // created(){
+    created(){
 
-    //     let role = localStorage.getItem('role')
+        // let role = localStorage.getItem('role')
 
-    //     if(role == "ADMIN"){
+        // if(!role){
+        //     this.$router.push('/login')
+        // }
 
-    //         this.$router.push({name: 'admin'})
-
-    //     } else if(role == "MANAJER"){
-
-    //         this.$router.push({name: 'manajer'})
-
-    //     } else if(role == "KASIR"){
-
-    //         this.$router.push({name: 'kasir'})
-
-    //     } else {
-
-    //         this.$router.push({name: 'login'})
-
-    //     }
-
-    // }
+    }
 
 }
 

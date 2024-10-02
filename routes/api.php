@@ -66,6 +66,7 @@ Route::middleware('auth:user_model')->group(function () {
         Route::get('/kasir/transaksi/detail/DetailTransaksiId/{id}', 'getDetailTransaksiId');
         Route::post('/kasir/transaksi/detail/add/{id}', 'addDetailTransaksi');
         Route::patch('/kasir/transaksi/detail/update/{id}', 'updateDetailTransaksi');
+        Route::delete('/kasir/transaksi/detail/delete/{id}', 'deleteDetailTransaksi');
         
     });
 

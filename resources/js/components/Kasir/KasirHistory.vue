@@ -14,7 +14,6 @@
         </div>
       </div>
       <div class="table-container">
-        {{orders}}
         <table class="table-list">
           <thead>
             <tr>
@@ -107,22 +106,6 @@ export default {
 .button {
   width: 150px;
 }
-
-/* .wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  background-color: #fff8e8;
-  padding-bottom: 10vh;
-  overflow: auto;
-} */
-
-/* table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-} */
 
 td {
   padding-top: 30px;

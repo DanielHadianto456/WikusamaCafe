@@ -147,3 +147,46 @@ export const getMenu = defineStore("getMenuStore", {
         }
     }
 })
+
+export const addDetail = defineStore("addDetailStore",{
+    actions: {
+        async authenticate(apiRoute, formData){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await res.json();
+            console.log(data);
+            this.router.push({ name: "kasirDetail", params: {id: data.id_transaksi} });
+        }
+    }
+})
+
+export const deleteDetail = defineStore("deletDetailStore", {
+    actions: {
+        async authenticate(apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            // this.router.push({ name: "kasirDetail", params: {id: data.id_transaksi} });
+        }
+    }
+})

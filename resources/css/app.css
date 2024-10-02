@@ -57,6 +57,26 @@
     text-decoration: none;
     font-family: "poppins";
     margin: 1vh;
+    
+}
+
+.button-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 25%;
+    height: 7.5vh;
+    width: 150px;
+    cursor: pointer;
+    background-color: #D11A2A;
+    border: none;
+    color: white;
+    border-radius: 5vh;
+    font-size: 2vh;
+    text-decoration: none;
+    font-family: "poppins";
+    margin: 1vh;
+    
 }
 
 .wrapper {
@@ -109,5 +129,9 @@
 
   body{
     background-color: #fff8e8;
+  }
+
+  .ignore-form{
+    display: contents;
   }
 
