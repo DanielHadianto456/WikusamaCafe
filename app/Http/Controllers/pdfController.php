@@ -22,10 +22,13 @@ class pdfController extends Controller
             return response()->json(['message' => 'Transaction not found'], 404);
         }
 
+        $totalHarga = $transaction->detailTransaksi->sum('harga');
+
         $data = [
             'title' => 'WikusamaCafe Reciept',
             'date' => date('m/d/Y'),
-            'transaction' => $transaction
+            'transaction' => $transaction,
+            'totalHarga' => $totalHarga
         ];
 
         try {

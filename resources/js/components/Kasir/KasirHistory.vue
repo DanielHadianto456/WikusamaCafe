@@ -31,7 +31,7 @@
               <td>{{ order.detail_meja.nomor_meja }}</td>
               <td
                 v-if="order.status === 'BELUM_BAYAR'"
-                style="color: red; font-weight: bold"
+                style="color: #BE0000; font-weight: bold"
               >
                 BELUM BAYAR
               </td>
@@ -133,6 +133,9 @@ td {
   padding-top: 30px;
   padding-bottom: 10px;
   border-bottom: 1px solid rgb(218, 218, 218);
+  color: black;
 }
+
+
 </style>
 

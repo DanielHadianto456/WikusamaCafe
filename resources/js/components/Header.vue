@@ -17,7 +17,7 @@
 <template>
   <div class="nav">
     <div class="hero">
-      <h1>WikusamaCafe Panel</h1>
+      <h1>Warung Tengkorak</h1>
     </div>
     <div></div>
     <div class="items" v-if="user">
@@ -92,7 +92,8 @@ export default {
 }
 
 .nav {
-  background-color: #674636;
+  /* background-color: #674636; */
+  background-color: #272A2C;
   /* height: vh; */
   padding: 3vh;
   display: flex;

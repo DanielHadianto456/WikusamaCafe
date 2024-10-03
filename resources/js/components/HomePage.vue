@@ -92,7 +92,7 @@ export default {
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-color: #fff8e8;
+  /* background-color: #fff8e8; */
 }
 
 .buttons-container {
