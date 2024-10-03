@@ -6,19 +6,10 @@
     </div>
     <div class="card buttons-container">
       <router-link to="/kasir/kasirHistory" class="button">
-        <strong>
-          History
-        </strong>
+        <strong> History </strong>
       </router-link>
       <router-link to="/kasir/kasirTambah" class="button">
-        <strong>
-          Tambah Pesanan
-        </strong>
-      </router-link>
-      <router-link to="/kasir/penjualan" class="button">
-        <strong>
-          Cetak Nota
-        </strong>
+        <strong> Tambah Pesanan </strong>
       </router-link>
     </div>
   </div>
@@ -28,19 +19,13 @@
     </div>
     <div class="card buttons-container">
       <router-link to="/kasir/kasirHistory" class="button">
-        <strong>
-          History
-        </strong>
+        <strong> History </strong>
       </router-link>
       <router-link to="/kasir/kasirTambah" class="button">
-        <strong>
-          Tambah Pesanan
-        </strong>
+        <strong> Tambah Pesanan </strong>
       </router-link>
       <router-link to="/kasir/penjualan" class="button">
-        <strong>
-          Cetak Nota
-        </strong>
+        <strong> Cetak Nota </strong>
       </router-link>
     </div>
   </div>
@@ -50,19 +35,13 @@
     </div>
     <div class="card buttons-container">
       <router-link to="/kasir/kasirHistory" class="button">
-        <strong>
-          History
-        </strong>
+        <strong> History </strong>
       </router-link>
       <router-link to="/kasir/kasirTambah" class="button">
-        <strong>
-          Tambah Pesanan
-        </strong>
+        <strong> Tambah Pesanan </strong>
       </router-link>
       <router-link to="/kasir/penjualan" class="button">
-        <strong>
-          Cetak Nota
-        </strong>
+        <strong> Cetak Nota </strong>
       </router-link>
     </div>
   </div>
@@ -77,12 +56,11 @@ export default {
   },
   name: "Home",
 
-  data(){
+  data() {
     return {
-      role: localStorage.getItem('role'),
-    }
-  }
-
+      role: localStorage.getItem("role"),
+    };
+  },
 };
 </script>
 
@@ -98,9 +76,7 @@ export default {
 .buttons-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; 
-  gap: 5vh; 
+  justify-content: center;
+  gap: 5vh;
 }
-
-
 </style>

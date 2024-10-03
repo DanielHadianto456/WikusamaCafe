@@ -40,14 +40,11 @@
             border-collapse: collapse;
             margin: 20px 0;
             table-layout: fixed;
-            text-align: center
+            text-align: center;
         }
 
         th,
         td {
-            /* border: 1px solid black;
-            padding: 8px;
-            text-align: left; */
             padding-top: 30px;
             padding-bottom: 10px;
             border-bottom: 1px solid rgb(218, 218, 218);
@@ -70,7 +67,7 @@
 
 <body>
     <div class="header">
-        <h1 style="text-decoration: underline;">WikusamaCafe Receipt</h1>
+        <h1 style="text-decoration: underline;">GrimmCafe Receipt</h1>
         <h3>{{ $date }}</h3>
     </div>
     <div class="subheader">
@@ -83,7 +80,7 @@
             <tr>
                 <th>Menu Item</th>
                 <th>Price</th>
-                <th>Image</th>
+                {{-- <th>Image</th> --}}
             </tr>
         </thead>
         <tbody>
@@ -91,9 +88,9 @@
                 <tr>
                     <td>{{ $item->detailMenu->nama_menu }}</td>
                     <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
-                    <td>
+                    {{-- <td>
                         <img src="storage/{{ $item->detailMenu->gambar }}" style="height: 100px; width: 100px">
-                    </td>
+                    </td> --}}
                 </tr>
             @endforeach
         </tbody>

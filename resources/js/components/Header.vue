@@ -17,7 +17,7 @@
 <template>
   <div class="nav">
     <div class="hero">
-      <h1>Warung Tengkorak</h1>
+      <h1>GrimmCafe</h1>
     </div>
     <div></div>
     <div class="items" v-if="user">
