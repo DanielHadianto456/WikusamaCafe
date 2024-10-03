@@ -8,6 +8,7 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\transaksiController;
 use App\Http\Controllers\detailTransaksiController;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\pdfController;
 
 //API Route Collection for Authentication Taken from AuthController Controller
 Route::middleware('auth:user_model')->group(function () {
@@ -86,6 +87,11 @@ Route::middleware('auth:user_model')->group(function () {
         
     });
 
+    Route::controller(pdfController::class)->group(function (){
+
+        Route::get('/kasir/pdf/getPdf/{id}', 'getPdf');
+        
+    });
     //Manajer API
 
     Route::controller(transaksiController::class)->group(function () {

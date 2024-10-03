@@ -15,7 +15,7 @@
           <div class="item-card" v-for="item in menu" :key="item.id_menu">
             <img :src="`/storage/${item.gambar}`" alt="" />
             <h4>{{ item.nama_menu }}</h4>
-            <p>Rp. {{ item.harga }}</p>
+            <p>Rp. {{ item.harga.toLocaleString("id-ID") }}</p>
             <input type="checkbox" :value="item.id_menu" v-model="menu_items" />
           </div>
         </div>

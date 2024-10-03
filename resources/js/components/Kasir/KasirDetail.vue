@@ -42,9 +42,8 @@
             <tr v-for="detail in orderDetails" :key="detail.id">
               <td>{{ detail.detail_menu.nama_menu }}</td>
               <td>{{ detail.detail_menu.jenis }}</td>
-              <td>Rp. {{ detail.detail_menu.harga }}</td>
+              <td>Rp. {{ detail.detail_menu.harga.toLocaleString("id-ID") }}</td>
               <td>
-                <!-- {{ detail.detail_menu.gambar }} -->
                 <img :src="`/storage/${detail.detail_menu.gambar}`" />
               </td>
               <td>
@@ -67,7 +66,7 @@
               <td>
                 <h3>
 
-                Total: Rp. {{ totalHarga }}
+                Total: Rp. {{ totalHarga.toLocaleString("id-ID") }}
                 </h3>
               </td>
               <td></td>

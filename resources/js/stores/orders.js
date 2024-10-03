@@ -190,3 +190,52 @@ export const deleteDetail = defineStore("deletDetailStore", {
         }
     }
 })
+
+export const getPdf = defineStore("getPdfStore", {
+    actions: {
+        async authenticate(apiRoute) {
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            return data;
+        },
+
+        async downloadPdf(orderId) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/kasir/pdf/getPdf/${orderId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    console.error('Error fetching PDF:', response.statusText);
+                    return;
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `order-${orderId}.pdf`);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+});

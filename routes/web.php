@@ -9,3 +9,5 @@ Route::get('/', function () {
 Route::get('/{pathMatch}', function() {
     return view('welcome');
 })->where('pathMatch', '.*');
+
+Route::get('generate-pdf', [App\Http\Controllers\pdfController::class, 'getPdf']);
