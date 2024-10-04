@@ -8,6 +8,7 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\transaksiController;
 use App\Http\Controllers\detailTransaksiController;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\pdfController;
 
 //API Route Collection for Authentication Taken from AuthController Controller
 Route::middleware('auth:user_model')->group(function () {
@@ -51,7 +52,7 @@ Route::middleware('auth:user_model')->group(function () {
     //Kasir API
     Route::controller(transaksiController::class)->group(function () {
        
-        Route::get('/kasir/transaksi/get', 'getTransaksi');
+        Route::get('/kasir/transaksi/get', 'getTransaksiPerUser');
         Route::get('/kasir/transaksi/getId/{id}', 'getTransaksiId');
         Route::post('/kasir/transaksi/add', 'addTransaksi');
         Route::patch('/kasir/transaksi/update/{id}', 'updateTransaksi');
@@ -86,6 +87,11 @@ Route::middleware('auth:user_model')->group(function () {
         
     });
 
+    Route::controller(pdfController::class)->group(function (){
+
+        Route::get('/kasir/pdf/getPdf/{id}', 'getPdf');
+        
+    });
     //Manajer API
 
     Route::controller(transaksiController::class)->group(function () {

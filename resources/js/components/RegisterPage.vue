@@ -74,9 +74,12 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { useRegister } from "@/stores/auth";
+import { useRouter } from "vue-router";
 
+const token = ref(localStorage.getItem("token"));
+const router = useRouter();
 const formData = reactive({
   nama_user: "",
   username: "",
@@ -86,6 +89,12 @@ const formData = reactive({
 
 const { authenticate } = useRegister()
 
+onMounted(() => {
+  if(token.value){
+    router.push({name: 'home'});
+  }
+});
+
 </script>
 
 <style scoped>
@@ -94,7 +103,7 @@ const { authenticate } = useRegister()
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #e3e9c2;
+  /* background-color: #e3e9c2; */
 }
 
 .form-table {
@@ -104,7 +113,7 @@ const { authenticate } = useRegister()
   height: 50vh; /* Increased height */
   background-color: white;
   text-align: center;
-  box-shadow: 5px 7.5px rgba(136, 136, 136, 0.5);
+  box-shadow: 5px 7.5px rgba(53, 53, 53, 0.5);
 }
 
 .form-table td {

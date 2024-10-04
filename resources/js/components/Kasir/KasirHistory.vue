@@ -31,7 +31,7 @@
               <td>{{ order.detail_meja.nomor_meja }}</td>
               <td
                 v-if="order.status === 'BELUM_BAYAR'"
-                style="color: red; font-weight: bold"
+                style="color: #BE0000; font-weight: bold"
               >
                 BELUM BAYAR
               </td>
@@ -47,6 +47,13 @@
                 <button class="button button-done" disabled v-else>
                   Sudah lunas
                 </button>
+                <button class="button" v-if="order.status === 'LUNAS'" @click="print(order.id_transaksi)">
+                  Print
+                </button>
+                <button v-else class="button-done">
+                  Print
+                </button>
+                
                 <router-link class="button" :to="{ name: 'kasirDetail', params: { id: order.id_transaksi }}">
                   Detail
                 </router-link>
@@ -61,7 +68,7 @@
 
 <script>
 import { reactive, onMounted } from "vue";
-import { getAllOrders, payOrder } from "@/stores/orders";
+import { getAllOrders, payOrder, getPdf } from "@/stores/orders";
 
 import Header from "../Header.vue";
 
@@ -95,6 +102,16 @@ export default {
         console.log(error);
       }
     },
+
+    async print(orderId) {
+      try {
+        const store = await getPdf();
+        await store.downloadPdf(orderId);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
   },
   mounted() {
     this.fetchOrders();
@@ -107,10 +124,18 @@ export default {
   width: 150px;
 }
 
+.button-done{
+  width: 150px;
+  /* background-color: grey; */
+}
+
 td {
   padding-top: 30px;
   padding-bottom: 10px;
   border-bottom: 1px solid rgb(218, 218, 218);
+  color: black;
 }
+
+
 </style>
 

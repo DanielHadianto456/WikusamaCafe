@@ -35,8 +35,35 @@ class detailTransaksiController extends Controller
     public function getDetailTransaksiId($id)
     {
 
-        $data = detailTransaksiModel::with('detailMenu')->where('id_transaksi', $id)->get();
-        return response()->json($data);
+        // Gets current user
+        $Auth = Auth::user();
+
+        // Fetches all transaction details with related data
+        $data = detailTransaksiModel::with(['detailTransaksi.detailPegawai', 'detailMenu'])
+            ->where('id_transaksi', $id)
+            ->get();
+
+        // Check if the current user is a manager
+        if ($Auth->role == 'MANAJER') {
+
+            return response()->json($data);
+
+        }
+
+        // Check if any of the transaction details belong to the authenticated user
+        $isAuthorized = $data->contains(function ($item) use ($Auth) {
+            return $item->detailTransaksi->id_user == $Auth->id_user;
+        });
+
+        if ($isAuthorized) {
+
+            return response()->json($data);
+        
+        } else {
+
+            return response()->json(['status' => false, 'message' => 'Unauthorized'], 401);
+        
+        }
 
     }
 
@@ -55,44 +82,50 @@ class detailTransaksiController extends Controller
             // Checks if status is set to "BELUM_BAYAR"
             if ($CheckTransaction->status == "BELUM_BAYAR") {
 
-                // Creates a validator to validate the array of menu inputs
-                $validator = Validator::make($request->all(), [
-                    'menu_items' => 'required|array',
-                    'menu_items.*.id_menu' => 'required|integer',
-                ]);
+                if ($Auth->id_user == $CheckTransaction->id_user) {
 
-                // Checks if validator occurs an error or not
-                if ($validator->fails()) {
-                    return response()->json($validator->errors()->toJson());
-                }
+                    // Creates a validator to validate the array of menu inputs
+                    $validator = Validator::make($request->all(), [
+                        'menu_items' => 'required|array',
+                        'menu_items.*.id_menu' => 'required|integer',
+                    ]);
 
-                // Initialize an array to store results
-                $results = [];
-
-                // Loop through each menu item in the request
-                foreach ($request->menu_items as $menuItem) {
-                    // Gets food data based on primary key from each menu item
-                    $CheckFood = foodModel::find($menuItem['id_menu']);
-
-                    if ($CheckFood) {
-                        // Creates a variable to save inputted data for each menu item
-                        $save = detailTransaksiModel::create([
-                            'id_transaksi' => $id, // id_transaksi is taken from $id in parameter
-                            'id_menu' => $menuItem['id_menu'],
-                            'harga' => $CheckFood->harga,
-                        ]);
-
-                        // Add the result of each save operation to the results array
-                        $results[] = $save ? ['status' => true, 'id_menu' => $menuItem['id_menu'], 'message' => 'Berhasil Menambah']
-                            : ['status' => false, 'id_menu' => $menuItem['id_menu'], 'message' => 'Gagal Menambah'];
-                    } else {
-                        // If the menu item is not found, add an error to the results
-                        $results[] = ['status' => false, 'id_menu' => $menuItem['id_menu'], 'message' => 'Menu not found'];
+                    // Checks if validator occurs an error or not
+                    if ($validator->fails()) {
+                        return response()->json($validator->errors()->toJson());
                     }
-                }
 
-                // Return all the results after processing the array
-                return response()->json($results, status: 200);
+                    // Initialize an array to store results
+                    $results = [];
+
+                    // Loop through each menu item in the request
+                    foreach ($request->menu_items as $menuItem) {
+                        // Gets food data based on primary key from each menu item
+                        $CheckFood = foodModel::find($menuItem['id_menu']);
+
+                        if ($CheckFood) {
+                            // Creates a variable to save inputted data for each menu item
+                            $save = detailTransaksiModel::create([
+                                'id_transaksi' => $id, // id_transaksi is taken from $id in parameter
+                                'id_menu' => $menuItem['id_menu'],
+                                'harga' => $CheckFood->harga,
+                            ]);
+
+                            // Add the result of each save operation to the results array
+                            $results[] = $save ? ['status' => true, 'id_menu' => $menuItem['id_menu'], 'message' => 'Berhasil Menambah']
+                                : ['status' => false, 'id_menu' => $menuItem['id_menu'], 'message' => 'Gagal Menambah'];
+                        } else {
+                            // If the menu item is not found, add an error to the results
+                            $results[] = ['status' => false, 'id_menu' => $menuItem['id_menu'], 'message' => 'Menu not found'];
+                        }
+                    }
+
+                    // Return all the results after processing the array
+                    return response()->json($results, status: 200);
+
+                } else {
+                    return response()->json(['status' => false, 'message' => 'Unauthorized'], status: 401);
+                }
 
             } else {
                 return response()->json(['status' => false, 'message' => 'Gagal, transaksi sudah lunas'], status: 500);
@@ -262,8 +295,18 @@ class detailTransaksiController extends Controller
             //Checks if status transaksi is "BELUM_BAYAR"
             if ($CheckTransaction->status == "BELUM_BAYAR") {
 
-                $delete = detailTransaksiModel::find($id)->delete();
-                response()->json($delete);
+                //Checks if the transaction detail belongs to the authenticated user
+                if($CheckTransaction->id_user == $Auth->id_user){
+
+                    $delete = detailTransaksiModel::find($id)->delete();
+                    response()->json($delete);
+
+                } else {
+
+                    //else returns an error
+                    return response()->json(['status' => false, 'message' => 'Unauthorized'], status: 500);
+                
+                }
 
             } else {
 
@@ -271,7 +314,6 @@ class detailTransaksiController extends Controller
                 return response()->json(['status' => false, 'message' => 'Gagal, karena transaksi sudah lunas'], status: 500);
 
             }
-
 
         } else {
 
