@@ -15,35 +15,91 @@ class transaksiController extends Controller
     //Function used to get all data from table
     public function getTransaksi()
     {
+        $Auth = Auth::user();
+
+        if ($Auth->role === "MANAJER") {
+
+            $data = transaksiModel::with([
+                'detailPegawai',
+                'detailMeja',
+                'detailTransaksi.detailMenu',
+            ])->get();
+
+            // Returns the filtered transactions as a JSON response
+            return response()->json($data);
+
+        } else {
+
+            //else returns an error
+            return response()->json(['status' => false, 'message' => 'Hanya Manajer yang bisa mengakses'], status: 500);
+
+        }
+
+    }
+
+    //Function used to get all data from table
+    //Based on user listed within the data
+    public function getTransaksiPerUser()
+    {
+
+        //Gets current user
+        $Auth = Auth::user();
+
         $data = transaksiModel::with([
             'detailPegawai',
             'detailMeja',
             'detailTransaksi.detailMenu',
         ])->get();
-        return response()->json($data);
+
+        //Filters out data that has the same username as $Auth
+        $checked = $data->filter(function ($item) use ($Auth) {
+            return $item->detailPegawai->nama_user == $Auth->nama_user;
+        });
+
+        // Returns the filtered transactions as a JSON response
+        return response()->json($checked);
+
     }
 
     //Function used to get data based on primary key
     public function getTransaksiId($id)
     {
 
+        //Gets current user
+        $Auth = Auth::user();
+
+        //Gets data from transaksi table
         $data = transaksiModel::with([
             'detailPegawai',
             'detailMeja',
             'detailTransaksi.detailMenu',
         ])->find($id);
-        return response()->json($data);
+
+        //Checks if current user is the same as the user listed in the data
+        if ($Auth->id_user == $data->id_user) {
+
+            //returns the data as a JSON response
+            return response()->json($data);
+
+        } else {
+
+            //else returns an error
+            return response()->json(['status' => false, 'message' => 'Unauthorized'], status: 500);
+
+        }
+        // return response()->json($data);
 
     }
 
     //Function used to get data based on date
-    public function getDate(Request $request){
+    public function getDate(Request $request)
+    {
 
         //Gets current user
         $Auth = Auth::user();
 
         //Checks if user is manager or not
-        if($Auth->role == 'MANAJER'){
+        if ($Auth->role == 'MANAJER') {
 
             //Gets data based on date
             $data = transaksiModel::with([
@@ -151,29 +207,39 @@ class transaksiController extends Controller
         //Checks if current user is cashier
         if ($Auth->role == "KASIR") {
 
-            //Changes the status of selected transaction into "LUNAS"
-            $update = transaksiModel::where('id_transaksi', $id)->update([
-                'status' => 'LUNAS',
-            ]);
+            //Checks if the user is the same as the user listed in the data
+            if ($Auth->id_user == $check->id_user) {
 
-            //Checks if save is successful
-            if ($update) {
-
-                //Changes the status of selected table into "KOSONG"
-                //So that it can be used again
-                tableModel::find($check->id_meja)->update([
-                    'status' => 'KOSONG',
+                //Changes the status of selected transaction into "LUNAS"
+                $update = transaksiModel::where('id_transaksi', $id)->update([
+                    'status' => 'LUNAS',
                 ]);
 
-                // If the $save is successful, return a 200 response
-                // with a success message
-                return response()->json(['status' => true, 'message' => 'Sukses membayar'], status: 200);
+                //Checks if save is successful
+                if ($update) {
+
+                    //Changes the status of selected table into "KOSONG"
+                    //So that it can be used again
+                    tableModel::find($check->id_meja)->update([
+                        'status' => 'KOSONG',
+                    ]);
+
+                    // If the $save is successful, return a 200 response
+                    // with a success message
+                    return response()->json(['status' => true, 'message' => 'Sukses membayar'], status: 200);
+
+                } else {
+
+                    // If the $save is not successful, return a 500 response
+                    // with an error message
+                    return response()->json(['status' => false, 'message' => 'Gagal membayar'], status: 500);
+
+                }
 
             } else {
 
-                // If the $save is not successful, return a 500 response
-                // with an error message
-                return response()->json(['status' => false, 'message' => 'Gagal membayar'], status: 500);
+                //else returns an error
+                return response()->json(['status' => false, 'message' => 'Unauthorized'], status: 500);
 
             }
 
@@ -192,12 +258,28 @@ class transaksiController extends Controller
 
         //Gets current user
         $Auth = Auth::user();
+        $data = transaksiModel::find($id);
 
+        //Checks if current user is KASIR
         if ($Auth->role == "KASIR") {
 
+            //Checks if the user is the same as the user listed in the data
+            if ($Auth->id_user == $data->id_user) {
+
+                //Deletes transaction data based on primary key taken from $id
+                $data->delete();
+                return response()->json(['status' => true, 'message' => 'Sukses menghapus'], status: 200);
+
+            } else {
+
+                //else returns an error
+                return response()->json(['status' => false, 'message' => 'Unauthorized'], status: 500);
+
+            }
+
             //Deletes transaction data based on primary key taken from $id
-            $delete = transaksiModel::find($id)->delete();
-            response()->json($delete);
+            // $delete = transaksiModel::find($id)->delete();
+            // response()->json($delete);
 
         } else {
 

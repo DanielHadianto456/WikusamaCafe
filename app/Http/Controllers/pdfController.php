@@ -25,7 +25,7 @@ class pdfController extends Controller
         $totalHarga = $transaction->detailTransaksi->sum('harga');
 
         $data = [
-            'title' => 'WikusamaCafe Reciept',
+            'title' => 'GrimmCafe Reciept',
             'date' => date('m/d/Y'),
             'transaction' => $transaction,
             'totalHarga' => $totalHarga

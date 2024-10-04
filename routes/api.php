@@ -52,7 +52,7 @@ Route::middleware('auth:user_model')->group(function () {
     //Kasir API
     Route::controller(transaksiController::class)->group(function () {
        
-        Route::get('/kasir/transaksi/get', 'getTransaksi');
+        Route::get('/kasir/transaksi/get', 'getTransaksiPerUser');
         Route::get('/kasir/transaksi/getId/{id}', 'getTransaksiId');
         Route::post('/kasir/transaksi/add', 'addTransaksi');
         Route::patch('/kasir/transaksi/update/{id}', 'updateTransaksi');

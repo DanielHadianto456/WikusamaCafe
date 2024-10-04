@@ -25,4 +25,8 @@ class detailTransaksiModel extends Model
         return $this->belongsTo(foodModel::class, 'id_menu', 'id_menu');
     }
 
+    public function detailTransaksi(){
+        return $this->belongsTo(transaksiModel::class, 'id_transaksi', 'id_transaksi');
+    }
+
 }
