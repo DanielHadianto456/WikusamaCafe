@@ -43,26 +43,30 @@ class detailTransaksiController extends Controller
             ->where('id_transaksi', $id)
             ->get();
 
-        // Check if the current user is a manager
-        if ($Auth->role == 'MANAJER') {
-
-            return response()->json($data);
-
-        }
-
         // Check if any of the transaction details belong to the authenticated user
         $isAuthorized = $data->contains(function ($item) use ($Auth) {
             return $item->detailTransaksi->id_user == $Auth->id_user;
         });
 
-        if ($isAuthorized) {
+        // Check if the current user is a manager
+        if ($Auth->role == 'KASIR' || $Auth->role == 'MANAJER') {
 
-            return response()->json($data);
-        
+            // Checks if the user is included in the transaction details
+            // or the current user is a manager
+            if ($isAuthorized || $Auth->role == 'MANAJER') {
+
+                return response()->json($data);
+
+            } else {
+
+                return response()->json(['status' => false, 'message' => 'Unauthorized'], 401);
+
+            }
+
         } else {
 
             return response()->json(['status' => false, 'message' => 'Unauthorized'], 401);
-        
+
         }
 
     }
@@ -296,7 +300,7 @@ class detailTransaksiController extends Controller
             if ($CheckTransaction->status == "BELUM_BAYAR") {
 
                 //Checks if the transaction detail belongs to the authenticated user
-                if($CheckTransaction->id_user == $Auth->id_user){
+                if ($CheckTransaction->id_user == $Auth->id_user) {
 
                     $delete = detailTransaksiModel::find($id)->delete();
                     response()->json($delete);
@@ -305,7 +309,7 @@ class detailTransaksiController extends Controller
 
                     //else returns an error
                     return response()->json(['status' => false, 'message' => 'Unauthorized'], status: 500);
-                
+
                 }
 
             } else {
