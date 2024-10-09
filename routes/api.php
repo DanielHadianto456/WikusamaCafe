@@ -97,8 +97,14 @@ Route::middleware('auth:user_model')->group(function () {
     Route::controller(transaksiController::class)->group(function () {
        
         Route::get('/manajer/transaksi/get', 'getTransaksi');
-        Route::get('/manajer/transaksi/getId/{id}', 'getTransaksiId');  
+        Route::get('/manajer/transaksi/getId/{id}', 'getTransaksiId');
         Route::post('/manajer/transaksi/getDate', 'getDate');  
+
+    });
+
+    Route::controller(detailTransaksiController::class)->group(function (){
+
+        Route::get('/manajer/transaksi/detail/DetailTransaksiId/{id}', 'getDetailTransaksiId');
 
     });
     

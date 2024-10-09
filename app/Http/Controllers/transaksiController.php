@@ -76,7 +76,7 @@ class transaksiController extends Controller
         ])->find($id);
 
         //Checks if current user is the same as the user listed in the data
-        if ($Auth->id_user == $data->id_user) {
+        if ($Auth->id_user == $data->id_user || $Auth->role == "MANAJER") {
 
             //returns the data as a JSON response
             return response()->json($data);
