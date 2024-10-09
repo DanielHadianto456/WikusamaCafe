@@ -9,6 +9,8 @@ import kasirTambah from '../components/Kasir/kasirTambah.vue'
 import kasirDetail from '../components/Kasir/kasirDetail.vue'
 import kasirTambahDetail from '../components/Kasir/KasirTambahDetail.vue'
 import manajer from '../components/Manajer/ManajerPanel.vue'
+import manajerHistory from '../components/Manajer/ManajerHistory.vue'
+import manajerDetail from '../components/Manajer/ManajerDetail.vue'
 import about from '../components/AboutPage.vue';
 import notFound from '../components/NotFoundPage.vue';
 import login from '../components/LoginPage.vue';
@@ -32,6 +34,18 @@ const routes = [
         path: '/manajer',
         name: 'manajer', 
         component: manajer,
+        meta: { requiresRole: ['MANAJER'] }
+    },
+    {
+        path: '/manajer/manajerHistory',
+        name: 'manajerHistory', 
+        component: manajerHistory,
+        meta: { requiresRole: ['MANAJER'] }
+    },
+    {
+        path: '/manajer/manajerDetail/:id',
+        name: 'manajerDetail', 
+        component: manajerDetail,
         meta: { requiresRole: ['MANAJER'] }
     },
     {
