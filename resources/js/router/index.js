@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import home from '../components/HomePage.vue';
 import admin from '../components/Admin/AdminPanel.vue'
+import listMenu from '../components/Admin/ListMenu.vue'
+import addMenu from '../components/Admin/AddMenu.vue'
+import editMenu from '../components/Admin/EditMenu.vue'
 import kasir from '../components/Kasir/KasirPanel.vue'
 import kasirTes from '../components/Kasir/KasirTes.vue'
 import kasirHistory from '../components/Kasir/kasirHistory.vue'
@@ -28,6 +31,24 @@ const routes = [
         path: '/admin',
         name: 'admin', 
         component: admin,
+        meta: { requiresRole: ['ADMIN'] }
+    },
+    {
+        path: '/admin/menu',
+        name: 'menu', 
+        component: listMenu,
+        meta: { requiresRole: ['ADMIN'] }
+    },
+    {
+        path: '/admin/menu/add',
+        name: 'addMenu', 
+        component: addMenu,
+        meta: { requiresRole: ['ADMIN'] }
+    },
+    {
+        path: '/admin/menu/edit/:id',
+        name: 'editMenu', 
+        component: editMenu,
         meta: { requiresRole: ['ADMIN'] }
     },
     {

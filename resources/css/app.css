@@ -78,7 +78,24 @@
     text-decoration: none;
     font-family: "poppins";
     margin: 1vh;
-    
+}
+
+.button-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 25%;
+  height: 7.5vh;
+  width: 150px;
+  cursor: pointer;
+  background-color: #bb900d;
+  border: none;
+  color: white;
+  border-radius: 5vh;
+  font-size: 2vh;
+  text-decoration: none;
+  font-family: "poppins";
+  margin: 1vh;
 }
 
 .wrapper {
@@ -138,3 +155,6 @@
     display: contents;
   }
 
+  img {
+    object-fit: cover;
+  }

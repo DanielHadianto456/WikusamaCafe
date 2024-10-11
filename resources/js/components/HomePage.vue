@@ -28,14 +28,14 @@
       <h1>Welcome to Admin Panel</h1>
     </div>
     <div class="card buttons-container">
-      <router-link to="/kasir/kasirHistory" class="button">
-        <strong> History </strong>
+      <router-link to="/admin/menu" class="button">
+        <strong> Menu </strong>
       </router-link>
       <router-link to="/kasir/kasirTambah" class="button">
-        <strong> Tambah Pesanan </strong>
+        <strong> Meja </strong>
       </router-link>
       <router-link to="/kasir/penjualan" class="button">
-        <strong> Cetak Nota </strong>
+        <strong> Pegawai </strong>
       </router-link>
     </div>
   </div>
