@@ -123,12 +123,16 @@ table {
 } */
 
 input {
-    width: 25%;
+  font-family: "poppins";
   border: 0;
   outline: none;
   border-bottom: 2px solid;
-  height: 2.5vh;
-  font-family: "poppins";
+  position: relative;
+  width: 40%;
+  height: 7.5vh;
+  padding: 1vh 2vh;
+  font-size: 2vh;
+  background: none;
 }
 
 td {
@@ -136,13 +140,15 @@ td {
 }
 
 select {
+  font-family: "poppins";
   border: 0;
   outline: none;
   border-bottom: 2px solid;
   position: relative;
-  width: 25%;
-  height: 2.5vh;
-  font-family: "poppins";
+  width: 43%;
+  height: 7.5vh;
+  padding: 1vh 2vh;
   font-size: 2vh;
+  background: none;
 }
 </style>

@@ -25,7 +25,7 @@ Route::middleware('auth:user_model')->group(function () {
         Route::get('/admin/food/get', 'getFood');
         Route::get('/admin/food/getId/{id}', 'getFoodId');
         Route::post('/admin/food/add', 'addFood');
-        Route::patch('/admin/food/update/{id}', 'updateFood');
+        Route::post('/admin/food/update/{id}', 'updateFood');
         Route::delete('/admin/food/delete/{id}', 'deleteFood');
 
     });
