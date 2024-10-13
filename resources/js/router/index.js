@@ -5,6 +5,9 @@ import admin from '../components/Admin/AdminPanel.vue'
 import listMenu from '../components/Admin/ListMenu.vue'
 import addMenu from '../components/Admin/AddMenu.vue'
 import editMenu from '../components/Admin/EditMenu.vue'
+import listMeja from '../components/Admin/ListMeja.vue'
+import addMeja from '../components/Admin/AddMeja.vue'
+import editMeja from '../components/Admin/EditMeja.vue'
 import kasir from '../components/Kasir/KasirPanel.vue'
 import kasirTes from '../components/Kasir/KasirTes.vue'
 import kasirHistory from '../components/Kasir/kasirHistory.vue'
@@ -49,6 +52,24 @@ const routes = [
         path: '/admin/menu/edit/:id',
         name: 'editMenu', 
         component: editMenu,
+        meta: { requiresRole: ['ADMIN'] }
+    },
+    {
+        path: '/admin/meja',
+        name: 'listMeja', 
+        component: listMeja,
+        meta: { requiresRole: ['ADMIN'] }
+    },
+    {
+        path: '/admin/meja/add',
+        name: 'addMeja', 
+        component: addMeja,
+        meta: { requiresRole: ['ADMIN'] }
+    },
+    {
+        path: '/admin/meja/edit/:id',
+        name: 'editMeja', 
+        component: editMeja,
         meta: { requiresRole: ['ADMIN'] }
     },
     {

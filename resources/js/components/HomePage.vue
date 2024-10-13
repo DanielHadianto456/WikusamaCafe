@@ -31,7 +31,7 @@
       <router-link to="/admin/menu" class="button">
         <strong> Menu </strong>
       </router-link>
-      <router-link to="/kasir/kasirTambah" class="button">
+      <router-link to="/admin/meja" class="button">
         <strong> Meja </strong>
       </router-link>
       <router-link to="/kasir/penjualan" class="button">
