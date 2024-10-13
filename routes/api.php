@@ -35,7 +35,7 @@ Route::middleware('auth:user_model')->group(function () {
         Route::get('/admin/meja/get', 'getMeja');
         Route::get('/admin/meja/getId/{id}', 'getMejaId');
         Route::post('/admin/meja/add', 'addMeja');
-        Route::patch('/admin/meja/update/{id}', 'updateMeja');
+        Route::post('/admin/meja/update/{id}', 'updateMeja');
         Route::delete('/admin/meja/delete/{id}', 'deleteMeja');
 
     });

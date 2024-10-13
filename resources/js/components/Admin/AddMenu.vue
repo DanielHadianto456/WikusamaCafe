@@ -121,3 +121,36 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+input {
+  font-family: "poppins";
+  border: 0;
+  outline: none;
+  border-bottom: 2px solid;
+  position: relative;
+  width: 40%;
+  height: 7.5vh;
+  padding: 1vh 2vh;
+  font-size: 2vh;
+  background: none;
+}
+
+td {
+  border-bottom: 0px;
+}
+
+select {
+  font-family: "poppins";
+  border: 0;
+  outline: none;
+  border-bottom: 2px solid;
+  position: relative;
+  width: 43%;
+  height: 7.5vh;
+  padding: 1vh 2vh;
+  font-size: 2vh;
+  background: none;
+}
+</style>

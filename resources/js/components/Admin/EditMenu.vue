@@ -18,7 +18,7 @@
               </tr>
               <tr>
                 <td>
-                  <input type="text" v-model="formData.nama_menu" required />
+                  <input type="text" v-model="formData.nama_menu"  />
                 </td>
               </tr>
               <tr>
@@ -26,7 +26,7 @@
               </tr>
               <tr>
                 <td>
-                  <select name="jenis" required v-model="formData.jenis">
+                  <select name="jenis"  v-model="formData.jenis">
                     <option value="MAKANAN">Makanan</option>
                     <option value="MINUMAN">Minuman</option>
                   </select>
@@ -39,7 +39,7 @@
               </tr>
               <tr>
                 <td>
-                    <input type="text" v-model="formData.deskripsi" required />
+                    <input type="text" v-model="formData.deskripsi"  />
                 </td>
               </tr>
               <tr>
@@ -49,7 +49,7 @@
               </tr>
               <tr>
                 <td>
-                    <input type="file" @change="handleFileChange" required />
+                    <input type="file" @change="handleFileChange"  />
                 </td>
               </tr>
               <tr>
@@ -59,7 +59,7 @@
               </tr>
               <tr>
                 <td>
-                    <input type="number" v-model="formData.harga" required />
+                    <input type="number" v-model="formData.harga"  />
                 </td>
               </tr>
               <tr>
