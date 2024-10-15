@@ -4,7 +4,7 @@
   <div class="wrapper">
     <div class="card">
       <div class="header-container">
-        <h1>Edit Meja</h1>
+        <h1>Edit Data</h1>
       </div>
     </div>
     <div class="card">
@@ -14,16 +14,36 @@
             <thead></thead>
             <tbody>
               <tr>
-                <td>Nomor Meja</td>
+                <td>Nama User</td>
               </tr>
               <tr>
                 <td>
-                  <input type="text" v-model="formData.nomor_meja" required />
+                  <input type="text" v-model="formData.nama_user" required />
+                </td>
+              </tr>
+              <tr>
+                <td>Username</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" v-model="formData.username" required />
+                </td>
+              </tr>
+              <tr>
+                <td>Role</td>
+              </tr>
+              <tr>
+                <td>
+                   <select name="role" required v-model="formData.role">
+                    <option value="ADMIN">Admin</option>
+                    <option value="MANAJER">Manajer</option>
+                    <option value="KASIR">Kasir</option>
+                  </select>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <button class="button">Edit Meja</button>
+                  <button class="button">Edit Data</button>
                 </td>
               </tr>
             </tbody>
@@ -36,18 +56,20 @@
 
 <script>
 import Header from "../Header.vue";
-import { editMeja } from "@/stores/meja";
+import { editUsers } from "@/stores/user";
 
 export default {
   components: {
     Header,
   },
-  name: "UpdateMeja",
+  name: "UpdateUser",
 
   data() {
     return {
       formData: {
-        nomor_meja: "",
+        nama_user: "",
+        role: "",
+        username: "",
       },
     };
   },
@@ -56,9 +78,11 @@ export default {
     async update() {
       try {
         const formData = new FormData();
-        formData.append("nomor_meja", this.formData.nomor_meja);
-        const store = editMeja();
-        await store.authenticate(`admin/meja/update/${this.$route.params.id}`, formData);
+        formData.append("nama_user", this.formData.nama_user);
+        formData.append("username", this.formData.username);
+        formData.append("role", this.formData.role);
+        const store = editUsers();
+        await store.authenticate(`admin/user/update/${this.$route.params.id}`, formData);
       } catch (error) {
         console.log(error);
       }

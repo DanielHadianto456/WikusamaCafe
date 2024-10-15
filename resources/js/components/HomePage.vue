@@ -34,8 +34,8 @@
       <router-link to="/admin/meja" class="button">
         <strong> Meja </strong>
       </router-link>
-      <router-link to="/kasir/penjualan" class="button">
-        <strong> Pegawai </strong>
+      <router-link to="/admin/user" class="button">
+        <strong> Users </strong>
       </router-link>
     </div>
   </div>

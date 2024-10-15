@@ -44,7 +44,7 @@ Route::middleware('auth:user_model')->group(function () {
         
         Route::get('/admin/user/get', 'getUserData'); 
         Route::get('/admin/user/getId/{id}', 'getUserDataId'); 
-        Route::patch('/admin/user/update/{id}', 'updateUserData');
+        Route::post('/admin/user/update/{id}', 'updateUserData');
         Route::delete('/admin/user/delete/{id}', 'deleteUser');
         
     });
