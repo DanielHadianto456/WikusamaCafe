@@ -107,29 +107,37 @@ class userController extends Controller
 
         }
 
-    }   
+    }
 
-    //Function used to delete a user based on primary key
-    public function deleteUser($id){
-
-        //Gets current user
+    // Function used to delete a user based on primary key
+    public function deleteUser($id)
+    {
+        // Gets current user
         $Auth = Auth::user();
 
-        //Checks if user's role is ADMIN
+        // Checks if user's role is ADMIN
         if ($Auth->role == "ADMIN") {
 
-            //Deletes user data based on primary key
-            $delete = userModel::find($id)->delete();
-            return response()->json($delete);
+            // Check if the user to be deleted is the currently logged-in user
+            if ($Auth->id_user == $id) {
+                
+                return response()->json(['status' => false, 'message' => 'Gagal, tidak bisa menghapus user yang sedang login'], 400);
+            
+            } else {
 
+                // Deletes user data based on primary key
+                $delete = userModel::find($id);
+                $delete->delete();
+                return response()->json(['status' => true, 'message' => 'User berhasil dihapus']);
+            
+            }
         } else {
 
-            //else returns an error
-            return response()->json(['status' => false, 'message' => 'Gagal, user bukan admin'], status: 500);
+            // Else returns an error
+            return response()->json(['status' => false, 'message' => 'Gagal, user bukan admin'], 403);
 
         }
-
+   
     }
-    
 
 }
