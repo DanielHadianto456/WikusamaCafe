@@ -89,11 +89,11 @@ const formData = reactive({
 
 const { authenticate } = useRegister()
 
-onMounted(() => {
-  if(token.value){
-    router.push({name: 'home'});
-  }
-});
+// onMounted(() => {
+//   if(token.value){
+//     router.push({name: 'home'});
+//   }
+// });
 
 </script>
 

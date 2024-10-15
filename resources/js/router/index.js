@@ -6,6 +6,8 @@ import listMenu from '../components/Admin/ListMenu.vue'
 import addMenu from '../components/Admin/AddMenu.vue'
 import editMenu from '../components/Admin/EditMenu.vue'
 import listMeja from '../components/Admin/ListMeja.vue'
+import editUser from '../components/Admin/EditUser.vue'
+import listUser from '../components/Admin/ListUser.vue'
 import addMeja from '../components/Admin/AddMeja.vue'
 import editMeja from '../components/Admin/EditMeja.vue'
 import kasir from '../components/Kasir/KasirPanel.vue'
@@ -20,7 +22,7 @@ import manajerDetail from '../components/Manajer/ManajerDetail.vue'
 import about from '../components/AboutPage.vue';
 import notFound from '../components/NotFoundPage.vue';
 import login from '../components/LoginPage.vue';
-import register from '../components/RegisterPage.vue';
+import addUser from '../components/RegisterPage.vue';
 
 
 const routes = [
@@ -70,6 +72,24 @@ const routes = [
         path: '/admin/meja/edit/:id',
         name: 'editMeja', 
         component: editMeja,
+        meta: { requiresRole: ['ADMIN'] }
+    },
+    {
+        path: '/admin/user',
+        name: 'listUser', 
+        component: listUser,
+        meta: { requiresRole: ['ADMIN'] }
+    },
+    {
+        path: '/admin/user/edit/:id',
+        name: 'editUser', 
+        component: editUser,
+        meta: { requiresRole: ['ADMIN'] }
+    },
+    {
+        path: '/admin/user/add',
+        name: 'addUser', 
+        component: addUser,
         meta: { requiresRole: ['ADMIN'] }
     },
     {
@@ -135,11 +155,6 @@ const routes = [
         path: '/login',
         name: 'login', 
         component: login
-    },
-    {
-        path: '/register',
-        name: 'register', 
-        component: register
     },
     {
         path: '/:pathMatch(.*)*',

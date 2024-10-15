@@ -22,7 +22,7 @@ export const useRegister = defineStore("registerStore", {
 
             const data = await res.json();
             console.log(data);
-            this.router.push({ name: "login" });
+            this.router.push({ name: "home" });
         },
     },
 });

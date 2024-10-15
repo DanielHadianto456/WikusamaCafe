@@ -42,16 +42,7 @@
                     <input type="text" v-model="formData.deskripsi"  />
                 </td>
               </tr>
-              <tr>
-                <td>
-                    Gambar
-                </td>
-              </tr>
-              <tr>
-                <td>
-                    <input type="file" @change="handleFileChange"  />
-                </td>
-              </tr>
+              
               <tr>
                 <td>
                     Harga
@@ -60,6 +51,16 @@
               <tr>
                 <td>
                     <input type="number" v-model="formData.harga"  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    Gambar
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <input type="file" @change="handleFileChange" style="border-bottom: 0px;" />
                 </td>
               </tr>
               <tr>
@@ -121,3 +122,41 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+input {
+  font-family: "poppins";
+  border: 0;
+  outline: none;
+  border-bottom: 2px solid;
+  position: relative;
+  width: 40%;
+  height: 7.5vh;
+  padding: 1vh 2vh;
+  font-size: 2vh;
+  background: none;
+}
+
+td {
+  border-bottom: 0px;
+}
+
+select {
+  font-family: "poppins";
+  border: 0;
+  outline: none;
+  border-bottom: 2px solid;
+  position: relative;
+  width: 43%;
+  height: 7.5vh;
+  padding: 1vh 2vh;
+  font-size: 2vh;
+  background: none;
+}
+
+#gambar{
+  border-bottom: 0px;
+}
+
+</style>

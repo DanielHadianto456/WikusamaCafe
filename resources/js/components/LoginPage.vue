@@ -34,14 +34,13 @@
               <button type="submit">Login</button>
             </td>
           </tr>
-          <tr class="form-column">
+          <!-- <tr class="form-column">
             <td class="form-row">
               <p>
-                <!-- Don't have an account? <RouterLink :to="{name:'register'}">Register</RouterLink> -->
                 Don't have an account? <router-link to="/register">Register</router-link>
               </p>
             </td>
-          </tr>
+          </tr> -->
           <tr>
             <td></td>
           </tr>
