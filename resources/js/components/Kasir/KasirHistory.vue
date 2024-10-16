@@ -98,6 +98,7 @@ export default {
       try {
         const store = await payOrder();
         await store.authenticate(`kasir/transaksi/update/${orderId}`);
+        this.fetchOrders();
       } catch (error) {
         console.log(error);
       }

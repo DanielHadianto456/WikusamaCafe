@@ -250,9 +250,9 @@ class transaksiController extends Controller
 
         }
 
-        //Function used to delete selected transaction record
-
     }
+    
+    //Function used to delete selected transaction record
     public function deleteTransaksi($id)
     {
 

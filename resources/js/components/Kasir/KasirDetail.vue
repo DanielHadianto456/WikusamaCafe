@@ -168,6 +168,7 @@ export default {
       try {
         const store = await payOrder();
         await store.authenticate(`kasir/transaksi/update/${orderId}`);
+        this.fetchOrderId();
       } catch (error) {
         console.log(error);
       }
@@ -177,6 +178,8 @@ export default {
       try {
         const store = await deleteDetail();
         await store.authenticate(`kasir/transaksi/detail/delete/${$idDetail}`);
+        this.fetchOrderId();
+        this.fetchOrderDetail();
       } catch (error) {
         console.log(error);
       }

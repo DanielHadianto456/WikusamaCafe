@@ -80,7 +80,8 @@ export const payOrder = defineStore("payOrderStore",{
 
             const data = await res.json();
             console.log(data);
-            this.router.push({ name: "kasirHistory" });
+            // return data;
+            // this.router.push({ name: "kasirHistory" });
         }
     }
 })
