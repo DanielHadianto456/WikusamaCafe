@@ -15,8 +15,23 @@
           <div class="item-card" v-for="item in menu" :key="item.id_menu">
             <img :src="`/storage/${item.gambar}`" alt="" />
             <h4>{{ item.nama_menu }}</h4>
-            <p>Rp. {{ item.harga.toLocaleString("id-ID") }}</p>
-            <input type="checkbox" :value="item.id_menu" v-model="menu_items" />
+            <p>Rp. {{ item.harga.toLocaleString('id-ID') }}</p>
+            <!-- Checkbox to select the item -->
+            <input
+              type="checkbox"
+              :value="item.id_menu"
+              v-model="menu_items"
+              @change="handleSelection(item.id_menu)" 
+            />
+            <!-- Show the quantity input only if the item is selected -->
+            <div v-if="menu_items.includes(item.id_menu)">
+              <input
+                type="number"
+                v-model.number="quantities[item.id_menu]"
+                min="1"
+                placeholder="Quantity"
+              />
+            </div>
           </div>
         </div>
         <div class="button-container">
@@ -39,8 +54,9 @@ export default {
 
   data() {
     return {
-      menu: [],
-      menu_items: [],
+      menu: [], // Stores menu items fetched from the backend
+      menu_items: [], // Stores selected menu items (by ID)
+      quantities: {}, // Stores quantities for each selected item
     };
   },
 
@@ -50,9 +66,15 @@ export default {
         const store = await getMenu();
         const data = await store.authenticate("kasir/food/get");
         this.menu = data;
-        // console.log(data)
       } catch (error) {
         console.log(error);
+      }
+    },
+
+    handleSelection(id_menu) {
+      // Initialize quantity to 1 when an item is selected
+      if (this.menu_items.includes(id_menu) && !this.quantities[id_menu]) {
+        this.quantities[id_menu] = 1;
       }
     },
 
@@ -64,14 +86,25 @@ export default {
 
       try {
         const store = await addDetail();
-        // Map selected menu items to objects with the 'id_menu' key
-        const formattedMenuItems = this.menu_items.map((id) => ({
-          id_menu: id,
-        }));
+
+        // Create the formatted array for 'menu_items'
+        const formattedMenuItems = [];
+
+        // Iterate over selected menu items and add objects based on quantity
+        this.menu_items.forEach((id_menu) => {
+          const quantity = this.quantities[id_menu] || 1; // Default to 1 if no quantity is specified
+          
+          // Add 'id_menu' object multiple times based on the quantity
+          for (let i = 0; i < quantity; i++) {
+            formattedMenuItems.push({ id_menu });
+          }
+        });
 
         const formData = {
           menu_items: formattedMenuItems,
         };
+
+        // Send request to add transaction details
         await store.authenticate(
           `kasir/transaksi/detail/add/${$idTransaksi}`,
           formData
@@ -124,10 +157,8 @@ img {
 }
 
 .item-container {
-  /* margin-top: 7.5vh; */
   font-family: "poppins";
   padding: 50px 10vh 50px 10vh;
-  /* height: auto; */
   width: 100%;
   display: flex;
   flex-direction: column;

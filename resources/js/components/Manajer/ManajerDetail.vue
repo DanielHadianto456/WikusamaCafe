@@ -15,25 +15,28 @@
             <tr>
               <td>Nama Menu</td>
               <td>Jenis</td>
+              <td>Kuantitas</td>
               <td>Harga</td>
               <td>Gambar</td>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="detail in orderDetails" :key="detail.id">
-              <td>{{ detail.detail_menu.nama_menu }}</td>
-              <td>{{ detail.detail_menu.jenis }}</td>
+            <tr v-for="item in groupedItems" :key="item.id">
+              <td>{{ item.nama_menu }}</td>
+              <td>{{ item.jenis }}</td>
+              <td> {{ item.quantity }} </td>
               <td>
-                Rp. {{ detail.detail_menu.harga.toLocaleString("id-ID") }}
+                Rp. {{ item.harga.toLocaleString("id-ID") }}
               </td>
               <td>
-                <img :src="`/storage/${detail.detail_menu.gambar}`" />
+                <img :src="`/storage/${item.gambar}`" />
               </td>
             </tr>
             <tr>
               <td>
                 <h3>Total: Rp. {{ totalHarga.toLocaleString("id-ID") }}</h3>
               </td>
+              <td></td>
               <td></td>
               <td></td>
               <td>
@@ -105,6 +108,27 @@ export default {
       return this.orderDetails.reduce((sum, detail) => {
         return sum + detail.detail_menu.harga;
       }, 0);
+    },
+
+    groupedItems() {
+      const grouped = this.orderDetails.reduce((acc, detail) => {
+        const existingItem = acc.find(i => i.id_menu === detail.id_menu);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          acc.push({ 
+            id_menu: detail.id_menu,
+            id_detail_transaksi: detail.id_detail_transaksi,
+            nama_menu: detail.detail_menu.nama_menu,
+            harga: detail.detail_menu.harga,
+            gambar: detail.detail_menu.gambar,
+            jenis: detail.detail_menu.jenis,
+            quantity: 1 
+          });
+        }
+        return acc;
+      }, []);
+      return grouped;
     },
   },
 
