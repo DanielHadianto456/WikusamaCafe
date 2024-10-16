@@ -62,6 +62,19 @@
                 >
                   Delete
                 </button>
+                <button
+                  v-if="orderStatus.status === 'LUNAS'"
+                  class="button-done"
+                >
+                  Delete All
+                </button>
+                <button
+                  @click="deleteAllMenu(item.id_menu)"
+                  v-else
+                  class="button-delete"
+                >
+                  Delete All
+                </button>
               </td>
             </tr>
             <tr>
@@ -107,6 +120,7 @@ import {
   getOrderId,
   payOrder,
   deleteDetail,
+  deleteAllDetail,
 } from "@/stores/orders";
 
 import Header from "../Header.vue";
@@ -163,6 +177,15 @@ export default {
       try {
         const store = await deleteDetail();
         await store.authenticate(`kasir/transaksi/detail/delete/${$idDetail}`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async deleteAllMenu($idMenu) {
+      try {
+        const store = await deleteAllDetail();
+        await store.authenticate(`kasir/transaksi/detail/deleteAll/${this.$route.params.id}/${$idMenu}`);
       } catch (error) {
         console.log(error);
       }

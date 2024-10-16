@@ -68,7 +68,8 @@ Route::middleware('auth:user_model')->group(function () {
         Route::post('/kasir/transaksi/detail/add/{id}', 'addDetailTransaksi');
         Route::patch('/kasir/transaksi/detail/update/{id}', 'updateDetailTransaksi');
         Route::delete('/kasir/transaksi/detail/delete/{id}', 'deleteDetailTransaksi');
-        
+        Route::delete('kasir/transaksi/detail/deleteAll/{id_transaksi}/{id_menu}', 'deleteMultipleByMenuAndTransaction');
+
     });
 
     Route::controller(TableController::class)->group(function (){

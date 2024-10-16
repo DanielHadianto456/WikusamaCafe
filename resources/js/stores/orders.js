@@ -191,6 +191,27 @@ export const deleteDetail = defineStore("deletDetailStore", {
     }
 })
 
+export const deleteAllDetail = defineStore("deleteAllDetailStore", {
+    actions: {
+        async authenticate(apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            // this.router.push({ name: "kasirDetail", params: {id: data.id_transaksi} });
+        }
+    }
+})
+
 export const getPdf = defineStore("getPdfStore", {
     actions: {
         async authenticate(apiRoute) {
