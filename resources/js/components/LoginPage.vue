@@ -15,6 +15,7 @@
                 class="username-input"
                 type="text"
                 placeholder="Username"
+                required
                 v-model="formData.username"
               />
             </td>
@@ -25,6 +26,7 @@
                 class="password-input"
                 type="password"
                 placeholder="Password"
+                required
                 v-model="formData.password"
               />
             </td>
