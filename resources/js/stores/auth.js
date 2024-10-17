@@ -21,8 +21,14 @@ export const useRegister = defineStore("registerStore", {
             });
 
             const data = await res.json();
-            console.log(data);
-            this.router.push({ name: "home" });
+
+            if (res.ok) {
+                console.log(data);
+                this.router.push({ name: "home" });
+                // alert("error.message");
+            } else {
+                alert("Username sudah ada");
+            }
         },
     },
 });
@@ -51,18 +57,18 @@ export const useLogin = defineStore("loginStore", {
                     },
                     body: JSON.stringify(formData),
                 });
-        
+
                 const data = await res.json();
-        
+
                 if (res.ok) {
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("user", data.user);
                     localStorage.setItem("role", data.role);
-        
+
                     this.token = data.token;
                     this.user = data.user;
                     this.role = data.role;
-        
+
                     this.router.push({ name: "home" });
                 } else {
                     // Handle error response
@@ -73,7 +79,7 @@ export const useLogin = defineStore("loginStore", {
                 console.error("An error occurred:", error);
                 alert("An error occurred: " + error.message); // Display error message to the user
             }
-        }
+        },
     },
 });
 

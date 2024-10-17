@@ -12,25 +12,33 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    //Register Function
+
+    // In your Register function in AuthController
     public function Register(Request $request)
     {
 
-        //Validates input data for registration
+        // Check if username already exists
+        if (userModel::where('username', $request->username)->exists()) {
+         
+            return response()->json(['status' => false, 'message' => 'Username already taken'], 422);
+        
+        }
+
+        // Other validation rules
         $validator = Validator::make($request->all(), [
-            'nama_user' => 'required|String|max:100',
-            'username' => 'required|String|max:100',
-            'password' => 'required|String|max:100',
+            'nama_user' => 'required|string|max:100',
+            'username' => 'required|string|max:100',
+            'password' => 'required|string|max:100',
             'role' => 'required',
         ]);
 
-        //Checks if validator fails
         if ($validator->fails()) {
-            //Returns an error if so
-            return response()->json($validator->errors()->toJson());
+            
+            return response()->json($validator->errors()->toJson(), 400);
+        
         }
 
-        //Creates a variable to save inputted data
+        // Save user
         $save = userModel::create([
             'nama_user' => $request->get('nama_user'),
             'username' => $request->get('username'),
@@ -38,18 +46,16 @@ class AuthController extends Controller
             'role' => $request->get('role'),
         ]);
 
-        //Checks if save is successful
         if ($save) {
-            // If the $save is successful, return a 200 response
-            // with a success message
-            return response()->json(['status' => true, 'message' => 'Sukses menambah'], status: 200);
-        } else {
-            // If the $save is not successful, return a 500 response
-            // with an error message
-            return response()->json(['status' => false, 'message' => 'Gagal menambah'], status: 500);
+
+            return response()->json(['status' => true, 'message' => 'User successfully registered'], 200);
+        
         }
 
+        return response()->json(['status' => false, 'message' => 'Failed to register user'], 500);
+    
     }
+
 
     //Login Function
     public function Login(Request $request)
