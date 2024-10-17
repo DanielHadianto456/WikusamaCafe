@@ -18,7 +18,7 @@
               </tr>
               <tr>
                 <td>
-                  <input type="text" v-model="formData.nama_user" required />
+                  <input type="text" v-model="formData.nama_user"  />
                 </td>
               </tr>
               <tr>
@@ -26,7 +26,7 @@
               </tr>
               <tr>
                 <td>
-                  <input type="text" v-model="formData.username" required />
+                  <input type="text" v-model="formData.username"  />
                 </td>
               </tr>
               <tr>
@@ -34,7 +34,7 @@
               </tr>
               <tr>
                 <td>
-                   <select name="role" required v-model="formData.role">
+                   <select name="role"  v-model="formData.role">
                     <option value="ADMIN">Admin</option>
                     <option value="MANAJER">Manajer</option>
                     <option value="KASIR">Kasir</option>
