@@ -303,7 +303,7 @@ class detailTransaksiController extends Controller
                 if ($CheckTransaction->id_user == $Auth->id_user) {
 
                     $delete = detailTransaksiModel::find($id)->delete();
-                    response()->json($delete);
+                    return response()->json($delete);
 
                 } else {
 
@@ -327,5 +327,46 @@ class detailTransaksiController extends Controller
         }
 
     }
+
+    // Function to delete multiple transaction details by id_menu within a specific transaction (id_transaksi)
+public function deleteMultipleByMenuAndTransaction($id_transaksi, $id_menu)
+{
+    // Get current user
+    $Auth = Auth::user();
+
+    // Check if the current user's role is "KASIR"
+    if ($Auth->role == "KASIR") {
+
+        // Get all transaction details where both id_menu and id_transaksi match
+        $details = detailTransaksiModel::where('id_menu', $id_menu)
+                                        ->where('id_transaksi', $id_transaksi)
+                                        ->get();
+
+        if ($details->isEmpty()) {
+            return response()->json(['status' => false, 'message' => 'No items found with the given menu ID in this transaction'], 404);
+        }
+
+        // Check the status of the transaction and user authorization
+        $CheckTransaction = transaksiModel::find($id_transaksi);
+
+        if ($CheckTransaction->status == "BELUM_BAYAR" && $CheckTransaction->id_user == $Auth->id_user) {
+            // Delete all matching records
+            foreach ($details as $detail) {
+                $detail->delete();
+            }
+
+            return response()->json(['status' => true, 'message' => 'Items successfully deleted'], 200);
+        } else {
+            return response()->json([
+                'status' => false, 
+                'message' => 'Cannot delete, either unauthorized or the transaction is already completed'
+            ], 403);
+        }
+    } else {
+        // Return an error if the user is not authorized
+        return response()->json(['status' => false, 'message' => 'Only KASIR can delete items'], 403);
+    }
+}
+
 
 }

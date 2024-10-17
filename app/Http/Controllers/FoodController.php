@@ -145,7 +145,7 @@ class FoodController extends Controller
             // Check if save was successful
             if ($save) {
 
-                return response()->json(['status' => true, 'message' => 'Sukses memperbarui'], 200);
+                return response()->json(['status' => true, 'message' => 'Sukses menghapus'], 200);
            
             } else {
 

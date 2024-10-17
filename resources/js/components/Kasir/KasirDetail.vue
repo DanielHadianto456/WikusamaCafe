@@ -33,18 +33,20 @@
             <tr>
               <td>Nama Menu</td>
               <td>Jenis</td>
+              <td>Kuantitas</td>
               <td>Harga</td>
               <td>Gambar</td>
               <td>Actions</td>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="detail in orderDetails" :key="detail.id">
-              <td>{{ detail.detail_menu.nama_menu }}</td>
-              <td>{{ detail.detail_menu.jenis }}</td>
-              <td>Rp. {{ detail.detail_menu.harga.toLocaleString("id-ID") }}</td>
+            <tr v-for="item in groupedItems" :key="item.id_menu">
+              <td>{{ item.nama_menu }}</td>
+              <td>{{ item.jenis}}</td>
+              <td>{{item.quantity}}</td>
+              <td>Rp. {{ item.harga.toLocaleString("id-ID") }}</td>
               <td>
-                <img :src="`/storage/${detail.detail_menu.gambar}`" />
+                <img :src="`/storage/${item.gambar}`" />
               </td>
               <td>
                 <button
@@ -54,11 +56,24 @@
                   Delete
                 </button>
                 <button
-                  @click="deleteMenu(detail.id_detail_transaksi)"
+                  @click="deleteMenu(item.id_detail_transaksi)"
                   v-else
                   class="button-delete"
                 >
                   Delete
+                </button>
+                <button
+                  v-if="orderStatus.status === 'LUNAS'"
+                  class="button-done"
+                >
+                  Delete All
+                </button>
+                <button
+                  @click="deleteAllMenu(item.id_menu)"
+                  v-else
+                  class="button-delete"
+                >
+                  Delete All
                 </button>
               </td>
             </tr>
@@ -69,6 +84,7 @@
                 Total: Rp. {{ totalHarga.toLocaleString("id-ID") }}
                 </h3>
               </td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -104,6 +120,7 @@ import {
   getOrderId,
   payOrder,
   deleteDetail,
+  deleteAllDetail,
 } from "@/stores/orders";
 
 import Header from "../Header.vue";
@@ -151,6 +168,7 @@ export default {
       try {
         const store = await payOrder();
         await store.authenticate(`kasir/transaksi/update/${orderId}`);
+        this.fetchOrderId();
       } catch (error) {
         console.log(error);
       }
@@ -160,6 +178,19 @@ export default {
       try {
         const store = await deleteDetail();
         await store.authenticate(`kasir/transaksi/detail/delete/${$idDetail}`);
+        this.fetchOrderId();
+        this.fetchOrderDetail();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async deleteAllMenu($idMenu) {
+      try {
+        const store = await deleteAllDetail();
+        await store.authenticate(`kasir/transaksi/detail/deleteAll/${this.$route.params.id}/${$idMenu}`);
+        this.fetchOrderId();
+        this.fetchOrderDetail();
       } catch (error) {
         console.log(error);
       }
@@ -171,6 +202,27 @@ export default {
       return this.orderDetails.reduce((sum, detail) => {
         return sum + detail.detail_menu.harga;
       }, 0);
+    },
+
+    groupedItems() {
+      const grouped = this.orderDetails.reduce((acc, detail) => {
+        const existingItem = acc.find(i => i.id_menu === detail.id_menu);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          acc.push({ 
+            id_menu: detail.id_menu,
+            id_detail_transaksi: detail.id_detail_transaksi,
+            nama_menu: detail.detail_menu.nama_menu,
+            harga: detail.detail_menu.harga,
+            gambar: detail.detail_menu.gambar,
+            jenis: detail.detail_menu.jenis,
+            quantity: 1 
+          });
+        }
+        return acc;
+      }, []);
+      return grouped;
     },
   },
 

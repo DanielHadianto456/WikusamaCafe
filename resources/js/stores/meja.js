@@ -57,17 +57,23 @@ export const addMeja = defineStore("addMejaStore", {
             });
 
             const data = await res.json();
-            console.log(data);
-            this.router.push({
-                name: "listMeja",
-            });
+
+            if (res.ok) {
+                console.log(data);
+                this.router.push({
+                    name: "listMeja",
+                });
+            } else {
+                console.error(data.message)
+                alert(data.message);
+            }
         },
     },
 });
 
 export const editMeja = defineStore("editMejaStore", {
     actions: {
-        async authenticate(apiRoute, formData){
+        async authenticate(apiRoute, formData) {
             const token = localStorage.getItem("token");
 
             const res = await fetch(`/api/${apiRoute}`, {
@@ -83,6 +89,6 @@ export const editMeja = defineStore("editMejaStore", {
             this.router.push({
                 name: "listMeja",
             });
-        }
-    }
-})
+        },
+    },
+});

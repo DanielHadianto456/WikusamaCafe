@@ -21,8 +21,14 @@ export const useRegister = defineStore("registerStore", {
             });
 
             const data = await res.json();
-            console.log(data);
-            this.router.push({ name: "home" });
+
+            if (res.ok) {
+                console.log(data);
+                this.router.push({ name: "home" });
+                // alert("error.message");
+            } else {
+                alert("Username sudah ada");
+            }
         },
     },
 });
@@ -42,39 +48,37 @@ export const useLogin = defineStore("loginStore", {
 
     actions: {
         async authenticate(apiRoute, formData) {
-            const res = await fetch(`/api/${apiRoute}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json", // Added header
-                    Accept: "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
+            try {
+                const res = await fetch(`/api/${apiRoute}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
 
-            const data = await res.json();
-            console.log(data);
+                const data = await res.json();
 
-            if (data) {
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", data.user);
-                localStorage.setItem("role", data.role);
+                if (res.ok) {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("user", data.user);
+                    localStorage.setItem("role", data.role);
 
-                this.token = data.token;
-                this.user = data.user;
-                this.role = data.role;
+                    this.token = data.token;
+                    this.user = data.user;
+                    this.role = data.role;
 
-                this.router.push({ name: "home" });
-                // if (this.role == "KASIR") {
-                //     this.router.push({ name: "kasir" });
-                // } else if (this.role == "MANAJER") {
-                //     this.router.push({ name: "manajer" });
-                // } else if (this.role == "ADMIN") {
-                //     this.router.push({ name: "admin" });
-                // } else {
-                //     this.router.push({ name: "home" });
-                // }
+                    this.router.push({ name: "home" });
+                } else {
+                    // Handle error response
+                    console.error("Login failed:", data.message);
+                    alert("Unauthorized"); // Display error message to the user
+                }
+            } catch (error) {
+                console.error("An error occurred:", error);
+                alert("An error occurred: " + error.message); // Display error message to the user
             }
-            // this.router.push({ name: "home" });
         },
     },
 });

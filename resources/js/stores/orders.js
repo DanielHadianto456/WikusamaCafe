@@ -80,7 +80,8 @@ export const payOrder = defineStore("payOrderStore",{
 
             const data = await res.json();
             console.log(data);
-            this.router.push({ name: "kasirHistory" });
+            // return data;
+            // this.router.push({ name: "kasirHistory" });
         }
     }
 })
@@ -171,6 +172,27 @@ export const addDetail = defineStore("addDetailStore",{
 })
 
 export const deleteDetail = defineStore("deletDetailStore", {
+    actions: {
+        async authenticate(apiRoute){
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(`/api/${apiRoute}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const data = await res.json();
+            console.log(data);
+            // this.router.push({ name: "kasirDetail", params: {id: data.id_transaksi} });
+        }
+    }
+})
+
+export const deleteAllDetail = defineStore("deleteAllDetailStore", {
     actions: {
         async authenticate(apiRoute){
             const token = localStorage.getItem("token");
