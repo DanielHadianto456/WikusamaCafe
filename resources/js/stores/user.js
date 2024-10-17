@@ -58,7 +58,13 @@ export const deleteUser = defineStore("deletUserStore", {
             });
 
             const data = await res.json();
-            console.log(data);
+            
+            if(res.ok){
+                console.log(data);
+            } else {
+                console.error(data.message);
+                alert("Gagal menghapus user");
+            }
         },
     },
 });
