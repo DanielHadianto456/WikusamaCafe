@@ -64,6 +64,13 @@ class userController extends Controller
         // Gets current user
         $Auth = Auth::user();
 
+        // Check if username already exists
+        if (userModel::where('username', $request->username)->exists()) {
+         
+            return response()->json(['status' => false, 'message' => 'Username already taken'], 422);
+        
+        }
+
         // Creates a validator to validate inputs
         $validator = Validator::make($request->all(), [
             'username' => 'nullable|String|max:100',

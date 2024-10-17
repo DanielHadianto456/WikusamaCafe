@@ -1,4 +1,4 @@
-import {defineStore} from "pinia";
+import { defineStore } from "pinia";
 
 export const getAllUsers = defineStore("getAllUsersStore", {
     actions: {
@@ -23,7 +23,7 @@ export const getAllUsers = defineStore("getAllUsersStore", {
 
 export const editUsers = defineStore("editUsersStore", {
     actions: {
-        async authenticate(apiRoute, formData){
+        async authenticate(apiRoute, formData) {
             const token = localStorage.getItem("token");
 
             const res = await fetch(`/api/${apiRoute}`, {
@@ -35,13 +35,18 @@ export const editUsers = defineStore("editUsersStore", {
             });
 
             const data = await res.json();
-            console.log(data);
-            this.router.push({
-                name: "listUser",
-            });
-        }
-    }
-})
+
+            if (res.ok) {
+                console.log(data);
+                this.router.push({
+                    name: "listUser",
+                });
+            } else {
+                alert("Username sudah ada");
+            }
+        },
+    },
+});
 
 export const deleteUser = defineStore("deletUserStore", {
     actions: {
@@ -58,8 +63,8 @@ export const deleteUser = defineStore("deletUserStore", {
             });
 
             const data = await res.json();
-            
-            if(res.ok){
+
+            if (res.ok) {
                 console.log(data);
             } else {
                 console.error(data.message);
