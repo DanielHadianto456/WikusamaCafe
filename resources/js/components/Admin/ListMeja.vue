@@ -84,6 +84,7 @@ export default {
       try {
         const store = await deleteMeja();
         await store.authenticate(`admin/meja/delete/${$idMeja}`);
+        this.fetchMeja();
       } catch (error) {
         console.log(error);
       }

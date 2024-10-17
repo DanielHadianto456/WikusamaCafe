@@ -303,7 +303,7 @@ class detailTransaksiController extends Controller
                 if ($CheckTransaction->id_user == $Auth->id_user) {
 
                     $delete = detailTransaksiModel::find($id)->delete();
-                    response()->json($delete);
+                    return response()->json($delete);
 
                 } else {
 

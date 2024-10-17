@@ -189,6 +189,8 @@ export default {
       try {
         const store = await deleteAllDetail();
         await store.authenticate(`kasir/transaksi/detail/deleteAll/${this.$route.params.id}/${$idMenu}`);
+        this.fetchOrderId();
+        this.fetchOrderDetail();
       } catch (error) {
         console.log(error);
       }

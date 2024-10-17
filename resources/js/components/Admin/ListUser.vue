@@ -76,6 +76,7 @@ export default {
       try {
         const store = await deleteUser();
         await store.authenticate(`admin/user/delete/${$idUser}`);
+        this.fetchUser();
       } catch (error) {
         console.log(error);
       }

@@ -83,6 +83,7 @@ export default {
       try {
         const store = await deleteMenu();
         await store.authenticate(`admin/food/delete/${$idMenu}`);
+        this.fetchMenu();
       } catch (error) {
         console.log(error);
       }
