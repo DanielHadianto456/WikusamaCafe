@@ -24,11 +24,22 @@ class pdfController extends Controller
 
         $totalHarga = $transaction->detailTransaksi->sum('harga');
 
+        // Calculate the quantity of each item
+        $groupedItems = $transaction->detailTransaksi->groupBy('id_menu')->map(function ($items) {
+            $firstItem = $items->first();
+            return [
+                'nama_menu' => $firstItem->detailMenu->nama_menu,
+                'harga' => $firstItem->harga,
+                'quantity' => $items->count(),
+            ];
+        });
+
         $data = [
-            'title' => 'GrimmCafe Reciept',
+            'title' => 'GrimmCafe Receipt',
             'date' => date('m/d/Y'),
             'transaction' => $transaction,
-            'totalHarga' => $totalHarga
+            'totalHarga' => $totalHarga,
+            'groupedItems' => $groupedItems,
         ];
 
         try {

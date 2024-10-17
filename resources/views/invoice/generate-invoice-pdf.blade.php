@@ -79,26 +79,21 @@
         <thead>
             <tr>
                 <th>Menu Item</th>
+                <th>Quantity</th>
                 <th>Price</th>
-                {{-- <th>Image</th> --}}
             </tr>
         </thead>
         <tbody>
-            @foreach ($transaction->detailTransaksi as $item)
+            @foreach ($groupedItems as $item)
                 <tr>
-                    <td>{{ $item->detailMenu->nama_menu }}</td>
-                    <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
-                    {{-- <td>
-                        <img src="storage/{{ $item->detailMenu->gambar }}" style="height: 100px; width: 100px">
-                    </td> --}}
+                    <td>{{ $item['nama_menu'] }}</td>
+                    <td>{{ $item['quantity'] }}</td>
+                    <td>Rp {{ number_format($item['harga'], 0, ',', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
     <h3>Total Price: Rp {{ number_format($totalHarga, 0, ',', '.') }}</h3>
-    {{-- <div class="footer">
-        <h3>Total: Rp {{ $total_harga }}</h3>
-    </div> --}}
     <div class="thank-you">
         <h4>Thank you for dining with us!</h4>
     </div>

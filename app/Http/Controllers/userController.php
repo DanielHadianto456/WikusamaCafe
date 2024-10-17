@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\userModel;
+use App\Models\transaksiModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,7 +23,8 @@ class userController extends Controller
         if ($Auth->role == "ADMIN") {
 
             //Gets all user data
-            $data = userModel::all();
+            // $data = userModel::all();
+            $data = userModel::withTrashed()->get();
             return response()->json($data);
 
         } else {
@@ -66,9 +68,9 @@ class userController extends Controller
 
         // Check if username already exists
         if (userModel::where('username', $request->username)->exists()) {
-         
+
             return response()->json(['status' => false, 'message' => 'Username already taken'], 422);
-        
+
         }
 
         // Creates a validator to validate inputs
@@ -109,8 +111,8 @@ class userController extends Controller
 
             }
 
-        //If the user isn't updating their own data,
-        //This else statement will check if the user is an admin
+            //If the user isn't updating their own data,
+            //This else statement will check if the user is an admin
         } else if ($Auth->role == "ADMIN") {
 
 
@@ -135,7 +137,7 @@ class userController extends Controller
                 return response()->json(['status' => false, 'message' => 'Gagal memperbarui'], 500);
 
             }
-            
+
         } else {
 
             // If the user is not an admin and trying to update someone else's data, return an error
@@ -172,8 +174,26 @@ class userController extends Controller
 
             } else {
 
+                // Check if the user has any unpaid transactions
+                $unpaidTransactions = transaksiModel::where('id_user', $id)
+                    ->where('status', '!=', 'LUNAS')
+                    ->exists();
+
+                if ($unpaidTransactions) {
+                    return response()->json(['status' => false, 'message' => 'Gagal, user masih memiliki transaksi yang belum dibayar'], 400);
+                }
+
+                $delete = userModel::withTrashed()->find($id);
+
+                //Checks if data has been soft deleted or not
+                if ($delete->trashed()) {
+
+                    //Force deletes data
+                    $delete->forceDelete();
+                    return response()->json(['status' => true, 'message' => 'User berhasil dihapus']);
+                }
+
                 // Deletes user data based on primary key
-                $delete = userModel::find($id);
                 $delete->delete();
                 return response()->json(['status' => true, 'message' => 'User berhasil dihapus']);
 
