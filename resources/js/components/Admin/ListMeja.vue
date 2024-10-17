@@ -25,10 +25,15 @@
           <tbody>
             <tr v-for="table in tables" :key="table.id_meja">
               <td>{{ table.nomor_meja }}</td>
-              <td :class="{'status-kosong': table.status === 'KOSONG', 'status-occupied': table.status !== 'KOSONG'}">
+              <td
+                :class="{
+                  'status-kosong': table.status === 'KOSONG',
+                  'status-occupied': table.status !== 'KOSONG',
+                }"
+              >
                 {{ table.status }}
               </td>
-              <td>
+              <td v-if="table.status === 'KOSONG'">
                 <router-link
                   class="button-edit"
                   :to="{ name: 'editMeja', params: { id: table.id_meja } }"
@@ -41,6 +46,10 @@
                 >
                   Delete
                 </button>
+              </td>
+              <td v-else>
+                <button class="button-done" disabled>Edit</button>
+                <button class="button-done" >Delete</button>
               </td>
             </tr>
           </tbody>
@@ -98,6 +107,10 @@ export default {
 </script>
 
 <style scoped>
+.button-done {
+  width: 150px;
+}
+
 .button {
   width: 150%;
 }
@@ -116,7 +129,7 @@ img {
 }
 
 .status-occupied {
-  color: #BE0000;
+  color: #be0000;
   font-weight: bold;
 }
 </style>
