@@ -17,7 +17,7 @@
             <select v-model="filterUserId" id="filter-user">
               <option value="">All Users</option>
               <option v-for="user in uniqueUsers" :key="user.id_user" :value="user.id_user">
-                {{ user.nama_user }} (ID: {{ user.id_user }})
+                {{ user.nama_user }} (ID: {{ user.id_user }}) <span v-if="user.deleted_at">(Tidak Aktif)</span>
               </option>
             </select>
           </div>

@@ -22,7 +22,8 @@ class userController extends Controller
         if ($Auth->role == "ADMIN") {
 
             //Gets all user data
-            $data = userModel::all();
+            // $data = userModel::all();
+            $data = userModel::withTrashed()->get();
             return response()->json($data);
 
         } else {

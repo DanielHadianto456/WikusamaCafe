@@ -18,6 +18,7 @@
               <td>Nama User</td>
               <td>Role</td>
               <td>Username</td>
+              <td>Status</td>
               <td>Actions</td>
             </tr>
           </thead>
@@ -26,11 +27,31 @@
                 <td>{{ user.nama_user }}</td>
                 <td>{{ user.role }}</td>
                 <td>{{ user.username }}</td>
-                <td>
+                <td
+                  v-if="user.deleted_at == null"
+                style="color: green; font-weight: bold"
+                > 
+                  Aktif
+                </td>
+                <td
+                v-else
+                style="color: #be0000; font-weight: bold"
+                >
+                  Tidak Aktif
+                </td>
+                <td v-if="user.deleted_at == null">
                     <router-link class="button-edit" :to="{ name: 'editUser', params: { id: user.id_user }}">
                         Edit
                     </router-link>
                     <button class="button-delete" @click="deleteUser(user.id_user)">
+                        Delete
+                    </button>
+                </td>
+                <td v-else>
+                    <button class="button-done">
+                      Edit
+                    </button>
+                    <button class="button-done">
                         Delete
                     </button>
                 </td>
@@ -119,5 +140,9 @@ img {
 .status-occupied {
   color: #BE0000;
   font-weight: bold;
+}
+
+.button-done {
+  width: 150px;
 }
 </style>

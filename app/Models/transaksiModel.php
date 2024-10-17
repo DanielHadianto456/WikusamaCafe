@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class transaksiModel extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'transaksi';
 
@@ -25,7 +26,7 @@ class transaksiModel extends Model
 
     public function detailPegawai()
     {
-        return $this->belongsTo(userModel::class, 'id_user', 'id_user');
+        return $this->belongsTo(userModel::class, 'id_user', 'id_user')->withTrashed();
     }
 
     public function detailMeja()

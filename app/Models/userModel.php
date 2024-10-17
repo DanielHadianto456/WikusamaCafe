@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticable;
 
 class userModel extends Authenticable implements JWTSubject
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'user';
 

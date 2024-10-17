@@ -23,7 +23,7 @@ class transaksiController extends Controller
                 'detailPegawai',
                 'detailMeja',
                 'detailTransaksi.detailMenu',
-            ])->get();
+            ])->withTrashed()->get();
 
             // Returns the filtered transactions as a JSON response
             return response()->json($data);
