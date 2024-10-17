@@ -173,8 +173,17 @@ class userController extends Controller
 
             } else {
 
+            $delete = userModel::withTrashed()->find($id);
+
+                //Checks if data has been soft deleted or not
+                if($delete->trashed()){
+                    
+                    //Force deletes data
+                    $delete->forceDelete();
+                    return response()->json(['status' => true, 'message' => 'User berhasil dihapus']);
+                }
+
                 // Deletes user data based on primary key
-                $delete = userModel::find($id);
                 $delete->delete();
                 return response()->json(['status' => true, 'message' => 'User berhasil dihapus']);
 

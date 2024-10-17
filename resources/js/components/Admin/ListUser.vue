@@ -51,8 +51,8 @@
                     <button class="button-done">
                       Edit
                     </button>
-                    <button class="button-done">
-                        Delete
+                    <button class="button-delete" @click="deleteUser(user.id_user)">
+                        HARD DELETE
                     </button>
                 </td>
             </tr>
