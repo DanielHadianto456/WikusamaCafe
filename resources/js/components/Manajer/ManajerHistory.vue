@@ -7,9 +7,20 @@
           <h1>History</h1>
           <h2>All Orders History</h2>
         </div>
-        <div class="date-filter">
-          <label for="filter-date">Filter Date:</label>
-          <input type="date" v-model="filterDate" id="filter-date" />
+        <div class="filters">
+          <div class="date-filter">
+            <label for="filter-date">Filter Date:</label>
+            <input type="date" v-model="filterDate" id="filter-date" />
+          </div>
+          <div class="user-filter">
+            <label for="filter-user">Filter User</label>
+            <select v-model="filterUserId" id="filter-user">
+              <option value="">All Users</option>
+              <option v-for="user in uniqueUsers" :key="user.id_user" :value="user.id_user">
+                {{ user.nama_user }} (ID: {{ user.id_user }})
+              </option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="table-container">
@@ -69,20 +80,36 @@ export default {
     return {
       orders: [],
       filterDate: "",
+      filterUserId: "",
     };
   },
   computed: {
     filteredOrders() {
-      if (!this.filterDate) {
-        return this.orders;
-      }
-      const filterDate = new Date(this.filterDate).toISOString().split("T")[0];
       return this.orders.filter((order) => {
+        const filterDate = this.filterDate
+          ? new Date(this.filterDate).toISOString().split("T")[0]
+          : null;
         const transactionDate = new Date(order.tanggal_transaksi)
           .toISOString()
           .split("T")[0];
-        return transactionDate === filterDate;
+        const matchesDate = !filterDate || transactionDate === filterDate;
+        const matchesUser = !this.filterUserId || order.detail_pegawai.id_user == this.filterUserId;
+        return matchesDate && matchesUser;
       });
+    },
+    uniqueUsers() {
+      const users = this.orders.map(order => order.detail_pegawai);
+      const uniqueUsers = [];
+      const userIds = new Set();
+
+      users.forEach(user => {
+        if (!userIds.has(user.id_user)) {
+          userIds.add(user.id_user);
+          uniqueUsers.push(user);
+        }
+      });
+
+      return uniqueUsers;
     },
   },
   methods: {
@@ -119,16 +146,24 @@ td {
   color: black;
 }
 
-.date-filter {
+.filters {
+  display: flex;
+  gap: 20px;
+}
+
+.date-filter,
+.user-filter {
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.date-filter label {
+.date-filter label,
+.user-filter label {
   margin-right: 10px;
 }
 
-.date-filter input {
+.date-filter input,
+.user-filter select {
   margin-right: 20px;
 }
 </style>
