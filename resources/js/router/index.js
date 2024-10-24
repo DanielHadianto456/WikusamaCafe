@@ -1,4 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
+// import jwt_decode from 'jwt-decode';
+// import { default as jwt_decode } from 'jwt-decode';
+// import { decode } from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 import home from '../components/HomePage.vue';
 import admin from '../components/Admin/AdminPanel.vue'
@@ -168,24 +173,131 @@ const router = createRouter({
     routes,
 })
 
-export default router;
-
 router.beforeEach((to, from, next) => {
-    const role = localStorage.getItem('role');
-    const isLoggedIn = !!role; // Check if the user is logged in
+    const token = localStorage.getItem('token');
+    let role = null;
+
+    if (token) {
+        try {
+            const decodedToken = jwtDecode(token);
+            // console.log('Decoded Token:', decodedToken); // Log the entire decoded token
+            role = decodedToken.role;
+            console.log('Role:', role); // Log the extracted role to see its contents
+        } catch (error) {
+            console.error('Invalid token:', error);
+            return next({ name: 'login' });
+        }
+    }
+
+    const isLoggedIn = !!role;
+
+    if (!isLoggedIn && to.name !== 'login') {
+        return next({ name: 'login' });
+    }
 
     if (to.matched.some(record => record.meta.requiresRole)) {
         const requiredRole = to.meta.requiresRole;
-        if (isLoggedIn) {
-            if (requiredRole.includes(role)) {
-                next();
-            } else {
-                next({ name: 'notFound' }); // Redirect to not authorized page if the user does not have the required role
-            }
+        if (isLoggedIn && requiredRole.includes(role)) {
+            next(); // Allow access if role matches
         } else {
-            next({ name: 'login' }); // Redirect to login if the user is not logged in
+            next({ name: 'notFound' });
         }
     } else {
-        next(); // Always call next() to ensure the navigation proceeds
+        next(); // Allow navigation if no role is required
     }
 });
+
+
+
+// router.beforeEach((to, from, next) => {
+//     const token = localStorage.getItem('token'); // Retrieve the JWT token from localStorage
+//     let role = null;
+
+//     if (token) {
+//         try {
+//             const decodedToken = jwtDecode(token); // Decode the JWT token
+//             role = decodedToken.role; // Extract the user's role from the token
+//         } catch (error) {
+//             console.error('Invalid token:', error);
+//             return next({ name: 'login' }); // If token is invalid, redirect to login
+//         }
+//     } else {
+//         return next({ name: 'login' }); // If no token is present, redirect to login
+//     }
+
+//     const isLoggedIn = !!role; // Check if the user is logged in by checking the role
+
+//     if (to.matched.some(record => record.meta.requiresRole)) {
+//         const requiredRole = to.meta.requiresRole;
+//         if (isLoggedIn) {
+//             if (requiredRole.includes(role)) {
+//                 next(); // Proceed if the user has the required role
+//             } else {
+//                 next({ name: 'notFound' }); // Redirect to notFound if user role doesn't match
+//             }
+//         } else {
+//             next({ name: 'login' }); // Redirect to login if not logged in
+//         }
+//     } else {
+//         next(); // If no role is required, proceed
+//     }
+// });
+
+
+// router.beforeEach((to, from, next) => {
+//     const token = localStorage.getItem('token'); // Retrieve the JWT token from localStorage
+//     let role = null;
+
+//     if (token !== null) {
+//         try {
+//             const decodedToken = jwtDecode(token); // Decode the JWT token
+//             role = decodedToken.role; // Extract the user's role from the token
+//             // console.log(decodedToken);
+//         } catch (error) {
+//             console.error('Invalid token:', error);
+//         }
+//     } else {
+//         next({ name: 'login' });
+//     }
+
+//     // console.log(decodedToken);
+
+//     const isLoggedIn = !!role; // Check if the user is logged in
+
+//     if (to.matched.some(record => record.meta.requiresRole)) {
+//         const requiredRole = to.meta.requiresRole;
+//         if (isLoggedIn) {
+//             if (requiredRole.includes(role)) {
+//                 next();
+//             } else {
+//                 next({ name: 'notFound' }); // Redirect to not authorized page if the user does not have the required role
+//             }
+//         } else {
+//             next({ name: 'login' }); // Redirect to login if the user is not logged in
+//         }
+//     } else {
+//         next(); // Always call next() to ensure the navigation proceeds
+//     }
+// });
+
+export default router;
+
+// router.beforeEach((to, from, next) => {
+//     const role = localStorage.getItem('role');
+//     const isLoggedIn = !!role; // Check if the user is logged in
+
+//     if (to.matched.some(record => record.meta.requiresRole)) {
+//         const requiredRole = to.meta.requiresRole;
+//         if (isLoggedIn) {
+//             if (requiredRole.includes(role)) {
+//                 next();
+//             } else {
+//                 next({ name: 'notFound' }); // Redirect to not authorized page if the user does not have the required role
+//             }
+//         } else {
+//             next({ name: 'login' }); // Redirect to login if the user is not logged in
+//         }
+//     } else {
+//         next(); // Always call next() to ensure the navigation proceeds
+//     }
+// });

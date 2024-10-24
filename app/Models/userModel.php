@@ -42,6 +42,8 @@ class userModel extends Authenticable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'role' => $this->role,
+        ];
     }
 }

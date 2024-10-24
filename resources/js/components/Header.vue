@@ -54,6 +54,7 @@
 // };
 
 import { useLogout } from "@/stores/auth";
+// import { jwtDecode } from "jwt-decode";
 
 export default {
   name: "Header",
@@ -61,6 +62,9 @@ export default {
   data() {
     return {
       user: localStorage.getItem("user"),
+      // token: localStorage.getItem('token'),
+      // decodedToken:jwtDecode(token),
+      // role: null,
     };
   },
 
