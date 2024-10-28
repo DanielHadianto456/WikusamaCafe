@@ -20,8 +20,8 @@
       <h1>GrimmCafe</h1>
     </div>
     <div></div>
-    <div class="items" v-if="user">
-      <span class="item">Welcome, {{ user }}</span>
+    <div class="items" v-if="username">
+      <span class="item">Welcome, {{ username }} {{role}} </span>
       <router-link class="item" to="/">Home</router-link>
       <span @click="logout" class="item">Logout</span>
     </div>
@@ -54,13 +54,30 @@
 // };
 
 import { useLogout } from "@/stores/auth";
+import { jwtDecode } from "jwt-decode";
 
 export default {
   name: "Header",
 
   data() {
+    let username = null;
+    let role = null;
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      username = decodedToken.username;
+      role = decodedToken.role;
+    }
+
     return {
-      user: localStorage.getItem("user"),
+      // user: localStorage.getItem("user"),
+      // token: localStorage.getItem('token'),
+      // decodedToken:jwtDecode(token),
+      // role: this.decodedToken->role,
+      username,
+      role,
+
     };
   },
 
@@ -72,7 +89,7 @@ export default {
         .authenticate("auth/logout")
         .then(() => {
           // Optionally handle any post-logout actions here
-          this.user = null; // Clear the user data from the component
+          // this.user = null; // Clear the user data from the component
         })
         .catch((error) => {
           console.error("Logout error:", error);

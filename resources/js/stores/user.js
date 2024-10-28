@@ -73,3 +73,21 @@ export const deleteUser = defineStore("deletUserStore", {
         },
     },
 });
+
+export const useUserRoleStore = defineStore('userRole', {
+    state: () => ({
+      role: null, // Initialize role as null
+      // You can add more user-related state properties here if needed
+    }),
+    actions: {
+      setRole(role) {
+        this.role = role; // Action to set the role
+      },
+      clearRole() {
+        this.role = null; // Action to clear the role (e.g., on logout)
+      },
+    },
+    getters: {
+      isAdmin: (state) => state.role === 'ADMIN', // Example getter for role checks
+    },
+  });

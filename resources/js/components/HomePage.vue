@@ -43,6 +43,7 @@
 
 <script>
 import Header from "./Header.vue";
+import { jwtDecode } from "jwt-decode";
 
 export default {
   components: {
@@ -51,8 +52,21 @@ export default {
   name: "Home",
 
   data() {
+
+    let username = null;
+    let role = null;
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      username = decodedToken.username;
+      role = decodedToken.role;
+    }
+
     return {
-      role: localStorage.getItem("role"),
+      // role: localStorage.getItem("role"),
+      username,
+      role,
     };
   },
 };

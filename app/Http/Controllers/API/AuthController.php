@@ -81,8 +81,8 @@ class AuthController extends Controller
         $user = Auth::guard('user_model')->user();
 
         return response()->json([
-            'user' => $request->username,
-            'role' => $user->role,
+            // 'user' => $request->username,
+            // 'role' => $user->role,
             'token' => $token,
         ]);
 
